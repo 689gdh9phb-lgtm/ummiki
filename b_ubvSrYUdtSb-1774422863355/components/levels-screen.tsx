@@ -80,24 +80,17 @@ export function LevelsScreen() {
                     <Lock className="w-6 h-6 text-muted-foreground" />
                   )}
 
-                  {/* Stars indicator for completed levels */}
+                  {/* Single star indicator for completed levels */}
                   {level.completed && (
                     <motion.div 
-                      className="absolute -bottom-3 flex gap-0.5"
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.2, duration: 0.3, type: 'spring' }}
+                      className="absolute -bottom-3"
+                      initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                      transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 200 }}
                     >
-                      {[1, 2, 3].map((star) => (
-                        <Star
-                          key={star}
-                          className={`w-4 h-4 drop-shadow-sm ${
-                            star <= level.stars
-                              ? 'fill-gold text-gold'
-                              : 'fill-muted text-muted-foreground/40'
-                          }`}
-                        />
-                      ))}
+                      <Star
+                        className="w-7 h-7 fill-gold text-gold drop-shadow-lg"
+                      />
                     </motion.div>
                   )}
                 </motion.button>
