@@ -58,7 +58,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const startLevel = useCallback((level: Level) => {
-    if (!level.unlocked) return;
+    // All levels are unlocked - no check needed
     setState(prev => ({
       ...prev,
       currentScreen: 'quiz',
