@@ -80,18 +80,13 @@ export function LevelsScreen() {
                     <Lock className="w-6 h-6 text-muted-foreground" />
                   )}
 
-                  {/* Single star indicator for completed levels */}
+                  {/* Single star indicator for completed levels - appears instantly */}
                   {level.completed && (
-                    <motion.div 
-                      className="absolute -bottom-3"
-                      initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                      animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                      transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 200 }}
-                    >
+                    <div className="absolute -bottom-3">
                       <Star
                         className="w-7 h-7 fill-gold text-gold drop-shadow-lg"
                       />
-                    </motion.div>
+                    </div>
                   )}
                 </motion.button>
 
