@@ -19,8 +19,8 @@ export function MainMenu() {
       startQuiz();
     } else if (categoryId === 'stories') {
       setScreen('story');
-    } else if (categoryId === 'hadiths') {
-      setScreen('hadiths');
+} else if (categoryId === 'hadith-reading') {
+      setScreen('hadith-reading');
     }
     // Other categories can be implemented later
   };
@@ -149,6 +149,11 @@ export function MainMenu() {
               )}
               {category.id === 'stories' && (
                 <div className="absolute top-3 right-3 bg-soft-purple text-white text-xs px-2 py-1 rounded-full font-medium">
+                  Читать
+                </div>
+              )}
+              {category.id === 'hadith-reading' && (
+                <div className="absolute top-3 right-3 bg-lavender text-deep-purple text-xs px-2 py-1 rounded-full font-medium">
                   Читать
                 </div>
               )}
