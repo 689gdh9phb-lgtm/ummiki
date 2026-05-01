@@ -2,7 +2,7 @@
 
 import { useGame } from '@/lib/game-context';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, Flame, Trophy, BookOpen, Target, Medal } from 'lucide-react';
+import { ArrowLeft, Star, Flame, Trophy, BookOpen, Target, Medal, CheckCircle2 } from 'lucide-react';
 
 export function ProfileScreen() {
   const { state, quiz, goToMenu } = useGame();
@@ -106,6 +106,70 @@ export function ProfileScreen() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </motion.div>
+
+      {/* Topics Progress Section */}
+      <motion.div
+        className="px-6 mb-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <BookOpen className="w-5 h-5 text-soft-purple" />
+          <h2 className="text-lg font-semibold text-foreground">Прогресс по темам</h2>
+        </div>
+
+        <div className="space-y-3">
+          {quiz.topics.map((topic, index) => {
+            const completedLevels = topic.levels.filter(l => l.completed).length;
+            const totalLevels = topic.levels.length;
+            const topicProgress = (completedLevels / totalLevels) * 100;
+            const topicStars = topic.levels.reduce((acc, l) => acc + (l.stars || 0), 0);
+            
+            return (
+              <motion.div
+                key={topic.id}
+                className="bg-card rounded-2xl p-4 border border-border/50"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.25 + index * 0.05, duration: 0.3 }}
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-2xl">{topic.icon}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-foreground">{topic.name}</p>
+                      <div className="flex items-center gap-1">
+                        {completedLevels === totalLevels ? (
+                          <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        ) : (
+                          <span className="text-xs text-muted-foreground">
+                            {completedLevels}/{totalLevels}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 mt-1">
+                      <div className="flex-1 h-2 bg-secondary rounded-full overflow-hidden">
+                        <motion.div
+                          className="h-full bg-gradient-to-r from-deep-purple to-soft-purple rounded-full"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${topicProgress}%` }}
+                          transition={{ delay: 0.4 + index * 0.1, duration: 0.5 }}
+                        />
+                      </div>
+                      <div className="flex items-center gap-0.5">
+                        <Star className="w-3 h-3 fill-gold text-gold" />
+                        <span className="text-xs font-medium text-foreground">{topicStars}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </motion.div>
 

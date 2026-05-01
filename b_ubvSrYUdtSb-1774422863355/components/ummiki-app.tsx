@@ -10,6 +10,8 @@ import { ResultScreen } from './result-screen';
 import { ProfileScreen } from './profile-screen';
 import { StoryScreen } from './story-screen';
 import { HadithsScreen } from './hadiths-screen';
+import { HadithReadingScreen } from './hadith-reading-screen';
+import { AlphabetScreen } from './alphabet-screen';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export function UmmikiApp() {
@@ -35,6 +37,10 @@ export function UmmikiApp() {
         return <StoryScreen />;
       case 'hadiths':
         return <HadithsScreen />;
+      case 'hadith-reading':
+        return <HadithReadingScreen />;
+      case 'alphabet':
+        return <AlphabetScreen />;
       default:
         return <WelcomeScreen />;
     }

@@ -80,19 +80,12 @@ export function LevelsScreen() {
                     <Lock className="w-6 h-6 text-muted-foreground" />
                   )}
 
-                  {/* Stars indicator */}
-                  {level.completed && level.stars > 0 && (
-                    <div className="absolute -bottom-2 flex gap-0.5">
-                      {[1, 2, 3].map((star) => (
-                        <Star
-                          key={star}
-                          className={`w-4 h-4 ${
-                            star <= level.stars
-                              ? 'fill-gold text-gold'
-                              : 'fill-none text-muted-foreground/30'
-                          }`}
-                        />
-                      ))}
+                  {/* Single star indicator for completed levels - appears instantly */}
+                  {level.completed && (
+                    <div className="absolute -bottom-3">
+                      <Star
+                        className="w-7 h-7 fill-gold text-gold drop-shadow-lg"
+                      />
                     </div>
                   )}
                 </motion.button>

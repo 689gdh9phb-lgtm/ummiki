@@ -194,7 +194,7 @@ export const quizData: Quiz = {
             },
             {
               id: 'p6-q2',
-              text: 'Кого Аллах спас от злого фараона?',
+              text: 'Кого Алла�� спас от злого фараона?',
               options: ['Юсуфа (мир ему)', 'Мусу (мир ему)', 'Ибрахима (мир ему)'],
               correctAnswer: 1,
             },
@@ -1032,6 +1032,6 @@ export const quizData: Quiz = {
 export const categories = [
   { id: 'quizzes', name: 'Викторины', icon: '🧠', color: 'bg-deep-purple' },
   { id: 'stories', name: 'Истории', icon: '📖', color: 'bg-soft-purple' },
-  { id: 'hadith', name: 'Хадисы', icon: '🕌', color: 'bg-lavender' },
+  { id: 'hadith-reading', name: 'Хадисы', icon: '🕌', color: 'bg-lavender' },
   { id: 'alphabet', name: 'Арабский алфавит', icon: '🔤', color: 'bg-mint' },
 ];
