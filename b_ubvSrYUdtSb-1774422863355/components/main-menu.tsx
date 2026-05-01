@@ -19,8 +19,10 @@ export function MainMenu() {
       startQuiz();
     } else if (categoryId === 'stories') {
       setScreen('story');
-} else if (categoryId === 'hadith-reading') {
+    } else if (categoryId === 'hadith-reading') {
       setScreen('hadith-reading');
+    } else if (categoryId === 'alphabet') {
+      setScreen('alphabet');
     }
     // Other categories can be implemented later
   };

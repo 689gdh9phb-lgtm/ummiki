@@ -39,7 +39,7 @@ export interface UserProgress {
 }
 
 export interface GameState {
-  currentScreen: 'welcome' | 'menu' | 'quiz-topics' | 'levels' | 'quiz' | 'result' | 'profile' | 'story' | 'hadiths' | 'hadith-reading';
+  currentScreen: 'welcome' | 'menu' | 'quiz-topics' | 'levels' | 'quiz' | 'result' | 'profile' | 'story' | 'hadiths' | 'hadith-reading' | 'alphabet';
   currentQuiz: Quiz | null;
   currentTopic: Topic | null;
   currentLevel: Level | null;
