@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ServiceWorkerRegistration } from './components/ServiceWorkerRegistration'
 import './globals.css'
 
 const montserrat = Montserrat({ 
@@ -13,6 +14,15 @@ export const metadata: Metadata = {
   title: 'Уммики - Исламское образование для детей',
   description: 'Интерактивное исламское образовательное приложение для детей. Изучайте Коран, Сунну и исламские знания через игры и викторины.',
   generator: 'v0.app',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Уммики',
+  },
+  formatDetection: {
+    telephone: false,
+  },
   icons: {
     icon: [
       {
@@ -43,6 +53,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} font-sans antialiased`}>
         {children}
         <Analytics />
+        <ServiceWorkerRegistration />
       </body>
     </html>
   )
