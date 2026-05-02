@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useGame } from '@/lib/game-context';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -48,34 +49,23 @@ export function WelcomeScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        {/* Glowing Book Illustration */}
+        {/* Logo */}
         <motion.div
           className="relative mb-8"
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
         >
-          <div className="absolute inset-0 bg-soft-purple/40 blur-3xl rounded-full scale-150" />
-          <div className="relative text-9xl drop-shadow-2xl">
-            📖
-          </div>
-          <motion.div
-            className="absolute -top-4 -right-4 text-4xl"
-            animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            ✨
-          </motion.div>
+          <div className="absolute inset-0 bg-soft-purple/30 blur-3xl rounded-full scale-150" />
+          <Image
+            src="/logo.svg"
+            alt="Уммики"
+            width={260}
+            height={222}
+            priority
+            className="relative drop-shadow-xl"
+          />
         </motion.div>
-
-        {/* Title */}
-        <motion.h1
-          className="text-5xl font-bold text-deep-purple mb-4 text-balance"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-        >
-          Уммики
-        </motion.h1>
 
         {/* Subtitle */}
         <motion.p

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Montserrat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ServiceWorkerRegistration } from './components/ServiceWorkerRegistration'
 import './globals.css'
 
 const montserrat = Montserrat({ 
@@ -13,22 +14,24 @@ export const metadata: Metadata = {
   title: 'Уммики - Исламское образование для детей',
   description: 'Интерактивное исламское образовательное приложение для детей. Изучайте Коран, Сунну и исламские знания через игры и викторины.',
   generator: 'v0.app',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Уммики',
+  },
+  formatDetection: {
+    telephone: false,
+  },
   icons: {
     icon: [
       {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
+        url: '/favicon.jpg',
+        type: 'image/jpeg',
       },
     ],
-    apple: '/apple-icon.png',
+    apple: '/favicon.jpg',
+    shortcut: '/favicon.jpg',
   },
 }
 
@@ -50,6 +53,7 @@ export default function RootLayout({
       <body className={`${montserrat.variable} font-sans antialiased`}>
         {children}
         <Analytics />
+        <ServiceWorkerRegistration />
       </body>
     </html>
   )
