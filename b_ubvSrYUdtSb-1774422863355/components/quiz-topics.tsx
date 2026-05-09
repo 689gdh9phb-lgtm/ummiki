@@ -42,7 +42,7 @@ export function QuizTopics() {
           <span>Назад</span>
         </button>
         <h1 className="text-2xl font-bold text-foreground">Выбери тему</h1>
-        <p className="text-muted-foreground mt-1">5 тем, 30 уровней, 107 вопросов</p>
+        <p className="text-muted-foreground mt-1">5 тем, 10 уровней</p>
       </motion.header>
 
       {/* Topics List */}
