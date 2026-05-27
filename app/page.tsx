@@ -18,12 +18,12 @@ export default function HomePage() {
         <Image 
           src="/favicon.svg" 
           alt="Уммики" 
-          width={80} 
-          height={80}
+          width={100} 
+          height={85}
           priority
-          className="w-[80px] h-auto"
+          className="w-[100px] h-auto mx-auto"
         />
-        <h1 className="text-2xl font-bold text-[#7B3FF2] mt-2 font-sans tracking-wider text-center">
+        <h1 className="text-2xl font-bold text-[#873AFF] mt-1 font-sans tracking-wider text-center">
           УММИКИ
         </h1>
       </div>
