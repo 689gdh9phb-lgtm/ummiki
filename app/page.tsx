@@ -16,14 +16,14 @@ export default function HomePage() {
       {/* Logo - centered */}
       <div className="mb-8 flex flex-col items-center justify-center">
         <Image 
-          src="/logo.svg" 
+          src="/favicon.svg" 
           alt="Уммики" 
-          width={200} 
-          height={170}
+          width={80} 
+          height={80}
           priority
-          className="w-[160px] h-auto mx-auto"
+          className="w-[80px] h-auto"
         />
-        <h1 className="text-2xl font-bold text-[#7B3FF2] mt-3 font-sans tracking-wide text-center">
+        <h1 className="text-2xl font-bold text-[#7B3FF2] mt-2 font-sans tracking-wider text-center">
           УММИКИ
         </h1>
       </div>
