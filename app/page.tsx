@@ -13,16 +13,19 @@ const menuItems = [
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-muted/50 px-4 py-6 safe-area-inset flex flex-col items-center justify-center">
-      {/* Logo */}
-      <div className="mb-6">
+      {/* Logo - centered */}
+      <div className="mb-8 flex flex-col items-center justify-center">
         <Image 
           src="/logo.svg" 
           alt="Уммики" 
           width={200} 
           height={170}
           priority
-          className="w-[180px] h-auto"
+          className="w-[160px] h-auto mx-auto"
         />
+        <h1 className="text-2xl font-bold text-[#7B3FF2] mt-3 font-sans tracking-wide text-center">
+          УММИКИ
+        </h1>
       </div>
 
       {/* Menu Grid */}

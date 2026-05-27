@@ -29,7 +29,7 @@ export default function StoriesPage() {
       </motion.div>
 
       {/* Story cards */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {stories.map((story, index) => (
           <StoryCard key={story.id} story={story} index={index} />
         ))}

@@ -29,7 +29,7 @@ export default function HadithsPage() {
       </motion.div>
 
       {/* Hadith cards */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {hadiths.map((hadith, index) => (
           <HadithCard key={hadith.id} hadith={hadith} index={index} />
         ))}
