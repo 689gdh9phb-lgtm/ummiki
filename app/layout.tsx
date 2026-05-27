@@ -42,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className="bg-background" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
-        <script src="https://telegram.org/js/telegram-web-app.js" async />
+        <script src="https://telegram.org/js/telegram-web-app.js" />
       </head>
       <body className={`${montserrat.variable} font-sans antialiased`}>
         <TelegramProvider>
