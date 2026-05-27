@@ -85,6 +85,7 @@
 @theme inline {
   --font-sans: 'Montserrat', 'Geist', 'Geist Fallback';
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --font-arabic: 'Amiri', 'Noto Sans Arabic', 'Arial', sans-serif;
   --color-lavender: var(--lavender);
   --color-soft-purple: var(--soft-purple);
   --color-deep-purple: var(--deep-purple);
@@ -146,4 +147,8 @@
 
 .animate-shake {
   animation: shake 0.5s ease-in-out;
+}
+
+.font-arabic {
+  font-family: var(--font-amiri), 'Amiri', 'Noto Sans Arabic', sans-serif;
 }

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Amiri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { ServiceWorkerRegistration } from './components/ServiceWorkerRegistration'
 import './globals.css'
@@ -8,6 +8,12 @@ const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
   variable: '--font-montserrat',
   weight: ['400', '500', '600', '700']
+});
+
+const amiri = Amiri({
+  subsets: ['arabic'],
+  variable: '--font-amiri',
+  weight: ['400', '700']
 });
 
 export const metadata: Metadata = {
@@ -50,7 +56,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${montserrat.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} ${amiri.variable} font-sans antialiased`}>
         {children}
         <Analytics />
         <ServiceWorkerRegistration />
