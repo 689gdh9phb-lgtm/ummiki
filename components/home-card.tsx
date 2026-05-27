@@ -45,7 +45,7 @@ export function HomeCard({ title, pill, emoji, href, index }: HomeCardProps) {
         </div>
         
         {/* Title - bottom left */}
-        <h3 className="text-[17px] font-bold text-foreground mt-auto leading-tight whitespace-pre-line">
+        <h3 className="text-[17px] font-bold text-foreground mt-auto leading-snug whitespace-pre-line">
           {title}
         </h3>
       </motion.div>
