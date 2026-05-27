@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, MapPin } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useTelegram } from './telegram-provider'
 import type { ArabicLetter } from '@/lib/data/alphabet'
 
@@ -49,10 +49,9 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
           </span>
         </div>
 
-        {/* Letter name and transliteration - LTR for Russian */}
+        {/* Letter name only - LTR for Russian */}
         <div className="text-center mb-2" dir="ltr">
           <p className="text-sm font-semibold text-[#4A3F5C]">{letter.name}</p>
-          <p className="text-xs text-[#7B3FF2]/70">{letter.transliteration}</p>
         </div>
 
         {/* Details button */}
@@ -103,7 +102,6 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
                     >
                       {letter.nameArabic}
                     </p>
-                    <p className="text-xs text-[#A66CFF] mt-0.5">{letter.transliteration}</p>
                   </div>
                 </div>
                 <button 
@@ -123,15 +121,6 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
                     Как произносить
                   </p>
                   <p className="text-sm text-[#4A3F5C] leading-relaxed">{letter.description}</p>
-                </div>
-                
-                {/* Makhraj */}
-                <div className="bg-gradient-to-br from-[#F0E6FF] to-[#E8DEFF] rounded-xl p-4 border border-[#D0C4F7]">
-                  <p className="text-xs font-medium text-[#7B3FF2] mb-1.5 flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5" />
-                    Место выхода звука (махрадж)
-                  </p>
-                  <p className="text-sm text-[#4A3F5C] font-medium">{letter.makhraj}</p>
                 </div>
               </div>
 
