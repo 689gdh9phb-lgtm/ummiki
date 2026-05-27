@@ -1,15 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { BackButton } from '@/components/back-button'
 import { SimpleLetterCard } from '@/components/simple-letter-card'
-import { arabicAlphabet, learningTips } from '@/lib/data/alphabet'
-import { BookOpen, Sparkles } from 'lucide-react'
+import { arabicAlphabet } from '@/lib/data/alphabet'
+import { BookOpen } from 'lucide-react'
 
 export default function AlphabetPage() {
-  const [showTips, setShowTips] = useState(true)
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#F5F1FF] via-[#EDE7FF] to-[#E8E0FF] 
                      px-4 py-5 pb-16 safe-area-inset">
@@ -46,62 +43,6 @@ export default function AlphabetPage() {
           </div>
         </div>
       </motion.div>
-
-      {/* Learning Tips Block */}
-      <AnimatePresence>
-        {showTips && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="relative z-10 mb-6"
-          >
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 
-                            border border-[#E0D4F7] shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-base font-bold text-[#4A3F5C] flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-[#A66CFF]" />
-                  Как правильно учить буквы
-                </h2>
-                <button 
-                  onClick={() => setShowTips(false)}
-                  className="text-xs text-[#7B3FF2] underline"
-                >
-                  Скрыть
-                </button>
-              </div>
-              <div className="space-y-3" dir="ltr">
-                {learningTips.map((tip, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-3"
-                  >
-                    <span className="text-lg">{tip.icon}</span>
-                    <div>
-                      <p className="text-sm font-medium text-[#4A3F5C]">{tip.title}</p>
-                      <p className="text-xs text-[#7B3FF2]/70 leading-relaxed">{tip.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {!showTips && (
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          onClick={() => setShowTips(true)}
-          className="relative z-10 mb-4 text-xs text-[#7B3FF2] underline"
-        >
-          Показать советы по изучению
-        </motion.button>
-      )}
 
       {/* Section Title */}
       <motion.div
