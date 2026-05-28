@@ -140,30 +140,39 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
                   <p className="text-xs font-medium text-[#7B3FF2] mb-3 text-center">
                     Буква с огласовками
                   </p>
-                  <div className="flex justify-center items-center gap-8" dir="rtl">
+                  <div className="flex justify-center items-center gap-10" dir="rtl">
                     {/* Fatha */}
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center w-14 h-20">
                       <span 
-                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
-                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                        className="text-5xl text-[#7B3FF2] font-bold text-center inline-block"
+                        style={{ 
+                          fontFamily: "var(--font-amiri), 'Amiri', serif",
+                          lineHeight: 1.5
+                        }}
                       >
                         {harakat.fatha}
                       </span>
                     </div>
                     {/* Kasra */}
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center w-14 h-20">
                       <span 
-                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
-                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                        className="text-5xl text-[#7B3FF2] font-bold text-center inline-block"
+                        style={{ 
+                          fontFamily: "var(--font-amiri), 'Amiri', serif",
+                          lineHeight: 1.5
+                        }}
                       >
                         {harakat.kasra}
                       </span>
                     </div>
                     {/* Damma */}
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex items-center justify-center w-14 h-20">
                       <span 
-                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
-                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                        className="text-5xl text-[#7B3FF2] font-bold text-center inline-block"
+                        style={{ 
+                          fontFamily: "var(--font-amiri), 'Amiri', serif",
+                          lineHeight: 1.5
+                        }}
                       >
                         {harakat.damma}
                       </span>

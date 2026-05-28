@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Montserrat } from 'next/font/google'
+import { Montserrat, Amiri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { TelegramProvider } from '@/components/telegram-provider'
@@ -7,6 +7,13 @@ import { TelegramProvider } from '@/components/telegram-provider'
 const montserrat = Montserrat({ 
   subsets: ['latin', 'cyrillic'],
   variable: '--font-montserrat',
+  display: 'swap',
+})
+
+const amiri = Amiri({
+  subsets: ['arabic'],
+  weight: ['400', '700'],
+  variable: '--font-amiri',
   display: 'swap',
 })
 
@@ -45,7 +52,7 @@ export default function RootLayout({
       <head>
         <script src="https://telegram.org/js/telegram-web-app.js" />
       </head>
-      <body className={`${montserrat.variable} font-sans antialiased`}>
+      <body className={`${montserrat.variable} ${amiri.variable} font-sans antialiased`}>
         <TelegramProvider>
           {children}
         </TelegramProvider>
