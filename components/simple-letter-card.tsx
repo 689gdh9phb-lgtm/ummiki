@@ -140,39 +140,33 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
                   <p className="text-xs font-medium text-[#7B3FF2] mb-3 text-center">
                     Буква с огласовками
                   </p>
-                  <div className="flex justify-center gap-6" dir="rtl">
+                  <div className="flex justify-center items-center gap-8" dir="rtl">
                     {/* Fatha */}
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center justify-center">
                       <span 
-                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
                         style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
                       >
                         {harakat.fatha}
                       </span>
-                      <span className="text-xs text-[#4A3F5C]">фатха</span>
-                      <span className="text-xs text-[#A66CFF]">(а)</span>
                     </div>
                     {/* Kasra */}
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center justify-center">
                       <span 
-                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
                         style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
                       >
                         {harakat.kasra}
                       </span>
-                      <span className="text-xs text-[#4A3F5C]">кясра</span>
-                      <span className="text-xs text-[#A66CFF]">(и)</span>
                     </div>
                     {/* Damma */}
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center justify-center">
                       <span 
-                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        className="text-5xl text-[#7B3FF2] font-bold leading-tight text-center"
                         style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
                       >
                         {harakat.damma}
                       </span>
-                      <span className="text-xs text-[#4A3F5C]">дамма</span>
-                      <span className="text-xs text-[#A66CFF]">(у)</span>
                     </div>
                   </div>
                 </div>
