@@ -11,6 +11,24 @@ interface SimpleLetterCardProps {
   index: number
 }
 
+// Функция для добавления огласовок к букве
+function getLetterWithHarakat(letter: string) {
+  // Для алифа особый случай - он сам является носителем огласовки
+  if (letter === 'ا') {
+    return {
+      fatha: 'أَ',   // алиф с фатхой
+      kasra: 'إِ',   // алиф с касрой  
+      damma: 'أُ'    // алиф с даммой
+    }
+  }
+  
+  return {
+    fatha: letter + '\u064E',  // фатха (а)
+    kasra: letter + '\u0650',  // кясра (и)
+    damma: letter + '\u064F'   // дамма (у)
+  }
+}
+
 export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
   const [showDetails, setShowDetails] = useState(false)
   const { hapticFeedback } = useTelegram()
@@ -19,6 +37,8 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
     hapticFeedback('light')
     setShowDetails(true)
   }
+
+  const harakat = getLetterWithHarakat(letter.letter)
 
   return (
     <>
@@ -57,7 +77,7 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
         {/* Details button */}
         <div className="text-center" dir="ltr">
           <span className="text-xs text-[#A66CFF] underline">
-            Подробнее
+            Читать с огласовками
           </span>
         </div>
       </motion.div>
@@ -113,8 +133,50 @@ export function SimpleLetterCard({ letter, index }: SimpleLetterCardProps) {
                 </button>
               </div>
               
-              {/* Content - all in LTR for Russian text */}
+              {/* Content - Harakat section */}
               <div className="space-y-4">
+                {/* 3 Harakat - Fatha, Kasra, Damma */}
+                <div className="bg-white rounded-xl p-4 border border-[#E0D4F7]">
+                  <p className="text-xs font-medium text-[#7B3FF2] mb-3 text-center">
+                    Буква с огласовками
+                  </p>
+                  <div className="flex justify-center gap-6" dir="rtl">
+                    {/* Fatha */}
+                    <div className="flex flex-col items-center">
+                      <span 
+                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                      >
+                        {harakat.fatha}
+                      </span>
+                      <span className="text-xs text-[#4A3F5C]">фатха</span>
+                      <span className="text-xs text-[#A66CFF]">(а)</span>
+                    </div>
+                    {/* Kasra */}
+                    <div className="flex flex-col items-center">
+                      <span 
+                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                      >
+                        {harakat.kasra}
+                      </span>
+                      <span className="text-xs text-[#4A3F5C]">кясра</span>
+                      <span className="text-xs text-[#A66CFF]">(и)</span>
+                    </div>
+                    {/* Damma */}
+                    <div className="flex flex-col items-center">
+                      <span 
+                        className="text-4xl text-[#7B3FF2] font-bold mb-1"
+                        style={{ fontFamily: "'Noto Sans Arabic', 'Amiri', sans-serif" }}
+                      >
+                        {harakat.damma}
+                      </span>
+                      <span className="text-xs text-[#4A3F5C]">дамма</span>
+                      <span className="text-xs text-[#A66CFF]">(у)</span>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Pronunciation instruction */}
                 <div className="bg-white rounded-xl p-4 border border-[#E0D4F7]">
                   <p className="text-xs font-medium text-[#7B3FF2] mb-1.5">
