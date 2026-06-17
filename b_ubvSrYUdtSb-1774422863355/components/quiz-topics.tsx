@@ -15,9 +15,8 @@ export function QuizTopics() {
   };
 
   const isTopicUnlocked = (topicIndex: number) => {
-    if (topicIndex === 0) return true;
-    const prevTopic = quiz.topics[topicIndex - 1];
-    return prevTopic.levels.every(l => l.completed);
+    // All topics are unlocked
+    return true;
   };
 
   const getTopicStars = (topicIndex: number) => {
