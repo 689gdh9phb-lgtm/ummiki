@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { BackButton } from '@/components/back-button'
 import { QuizPlayer } from '@/components/quiz-player'
 import { getSection, getTopic } from '@/lib/data/quizzes'
+import { questionsLabel } from '@/lib/utils'
 
 interface TopicPageProps {
   params: Promise<{ id: string; topic: string }>
@@ -60,7 +61,7 @@ export default function TopicPage({ params }: TopicPageProps) {
               {topic.title}
             </h1>
             <p className="text-xs text-muted-foreground">
-              {topic.questions.length} вопросов
+              {questionsLabel(topic.questions.length)}
             </p>
           </div>
         </motion.div>

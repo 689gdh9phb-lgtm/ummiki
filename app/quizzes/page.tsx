@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { BackButton } from '@/components/back-button'
 import { QuizCategoryCard } from '@/components/quiz-category-card'
 import { quizSections } from '@/lib/data/quizzes'
+import { topicsLabel } from '@/lib/utils'
 
 export default function QuizzesPage() {
   return (
@@ -36,7 +37,7 @@ export default function QuizzesPage() {
             href={`/quizzes/${section.id}`}
             title={section.title}
             emoji={section.emoji}
-            description={`${section.topics.length} тем`}
+            description={topicsLabel(section.topics.length)}
             index={index}
           />
         ))}

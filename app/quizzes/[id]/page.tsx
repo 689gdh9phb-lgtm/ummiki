@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { BackButton } from '@/components/back-button'
 import { QuizCategoryCard } from '@/components/quiz-category-card'
 import { getSection } from '@/lib/data/quizzes'
+import { topicsLabel, questionsLabel } from '@/lib/utils'
 
 interface SectionPageProps {
   params: Promise<{ id: string }>
@@ -55,7 +56,7 @@ export default function SectionPage({ params }: SectionPageProps) {
             {section.title}
           </h1>
           <p className="text-sm text-muted-foreground">
-            {section.topics.length} тем
+            {topicsLabel(section.topics.length)}
           </p>
         </div>
       </motion.div>
@@ -68,7 +69,7 @@ export default function SectionPage({ params }: SectionPageProps) {
             href={`/quizzes/${section.id}/${topic.id}`}
             title={topic.title}
             emoji={section.emoji}
-            description={`${topic.questions.length} вопросов`}
+            description={questionsLabel(topic.questions.length)}
             index={index}
           />
         ))}
