@@ -25,10 +25,10 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null) return
-    
+
     setSelectedAnswer(answerIndex)
     setShowExplanation(true)
-    
+
     if (answerIndex === currentQuestion.correctAnswer) {
       hapticFeedback('success')
     } else {
@@ -38,7 +38,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
 
   const handleNext = () => {
     hapticFeedback('light')
-    
+
     if (currentIndex < questions.length - 1) {
       setCurrentIndex(prev => prev + 1)
       setSelectedAnswer(null)
@@ -58,13 +58,13 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="flex flex-col items-center justify-center min-h-[60vh] px-6 text-center"
+        className="flex flex-1 flex-col items-center justify-center px-6 text-center"
       >
         {/* Celebration animation */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ 
+          transition={{
             type: "spring",
             stiffness: 200,
             damping: 15,
@@ -91,7 +91,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
         >
           МашаАллах!
         </motion.h2>
-        
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,9 +118,9 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
   }
 
   return (
-    <div className="px-5 py-6">
+    <div className="flex flex-1 flex-col px-5 pb-4 min-h-0">
       {/* Progress bar */}
-      <div className="mb-6">
+      <div className="mb-4 flex-shrink-0">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm font-medium text-muted-foreground">
             Вопрос {currentIndex + 1} из {questions.length}
@@ -144,16 +144,17 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.3 }}
+          className="flex flex-1 flex-col min-h-0"
         >
-          <h2 className="text-xl font-semibold text-foreground mb-6 text-balance">
+          <h2 className="text-lg font-semibold text-foreground mb-4 text-balance flex-shrink-0">
             {currentQuestion.question}
           </h2>
 
           {/* Answer options */}
-          <div className="space-y-3 mb-6">
+          <div className="space-y-2.5 flex-shrink-0">
             {currentQuestion.options.map((option, index) => {
               let buttonClass = 'bg-card border-border/50'
-              
+
               if (selectedAnswer !== null) {
                 if (index === currentQuestion.correctAnswer) {
                   buttonClass = 'bg-success/10 border-success text-success'
@@ -169,42 +170,44 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
                   disabled={selectedAnswer !== null}
                   whileHover={selectedAnswer === null ? { scale: 1.01 } : {}}
                   whileTap={selectedAnswer === null ? { scale: 0.99 } : {}}
-                  className={`w-full p-4 rounded-2xl border-2 text-left font-medium 
+                  className={`w-full p-3.5 rounded-2xl border-2 text-left font-medium 
                              transition-all duration-200 ${buttonClass}
                              disabled:cursor-default`}
                 >
                   <span className="flex items-center gap-3">
-                    <span className="w-8 h-8 rounded-full bg-secondary flex items-center 
+                    <span className="w-7 h-7 flex-shrink-0 rounded-full bg-secondary flex items-center 
                                    justify-center text-sm font-semibold text-secondary-foreground">
                       {String.fromCharCode(65 + index)}
                     </span>
-                    <span className="flex-1">{option}</span>
+                    <span className="flex-1 text-[15px] leading-snug">{option}</span>
                   </span>
                 </motion.button>
               )
             })}
           </div>
 
-          {/* Explanation */}
-          <AnimatePresence>
-            {showExplanation && (
-              <motion.div
-                initial={{ opacity: 0, y: 10, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: 'auto' }}
-                exit={{ opacity: 0, y: -10, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mb-6"
-              >
-                <div className="p-4 rounded-2xl bg-secondary/50 border border-border/50">
-                  <p className="text-sm text-foreground leading-relaxed">
-                    {currentQuestion.explanation}
-                  </p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Explanation - flexible region that scrolls internally if needed */}
+          <div className="flex-1 min-h-0 mt-3">
+            <AnimatePresence>
+              {showExplanation && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full overflow-y-auto"
+                >
+                  <div className="p-3.5 rounded-2xl bg-secondary/50 border border-border/50">
+                    <p className="text-sm text-foreground leading-relaxed">
+                      {currentQuestion.explanation}
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
-          {/* Next button */}
+          {/* Next button - pinned at bottom */}
           {selectedAnswer !== null && (
             <motion.button
               initial={{ opacity: 0, y: 10 }}
@@ -212,7 +215,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
               onClick={handleNext}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 rounded-2xl bg-primary text-primary-foreground 
+              className="w-full py-4 rounded-2xl bg-primary text-primary-foreground flex-shrink-0 mt-3
                          font-semibold shadow-[0_4px_20px_rgba(123,63,242,0.3)]"
             >
               {currentIndex < questions.length - 1 ? 'Следующий вопрос' : 'Завершить'}

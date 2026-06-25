@@ -38,11 +38,11 @@ export default function TopicPage({ params }: TopicPageProps) {
   const hasQuestions = topic.questions.some((q) => q.question.trim() !== '')
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-background via-background to-secondary/30 
-                     pb-12 safe-area-inset">
-      {/* Header */}
-      <div className="px-5 py-6">
-        <div className="mb-4">
+    <main className="flex h-[100dvh] flex-col overflow-hidden bg-gradient-to-b from-background via-background to-secondary/30 
+                     safe-area-inset">
+      {/* Header - compact */}
+      <div className="px-5 pt-5 pb-3 flex-shrink-0">
+        <div className="mb-3">
           <BackButton label={section.title} />
         </div>
 
@@ -52,14 +52,14 @@ export default function TopicPage({ params }: TopicPageProps) {
           transition={{ duration: 0.4 }}
           className="flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl bg-secondary flex items-center justify-center text-xl flex-shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center text-lg flex-shrink-0">
             {section.emoji}
           </div>
           <div>
-            <h1 className="text-xl font-bold text-foreground text-balance">
+            <h1 className="text-base font-bold text-foreground text-balance leading-tight">
               {topic.title}
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs text-muted-foreground">
               {topic.questions.length} вопросов
             </p>
           </div>
@@ -73,8 +73,8 @@ export default function TopicPage({ params }: TopicPageProps) {
           categoryTitle={topic.title}
         />
       ) : (
-        <div className="px-5">
-          <div className="bg-card rounded-[24px] p-8 text-center border border-border/50">
+        <div className="px-5 flex-1 flex items-center">
+          <div className="bg-card rounded-[24px] p-8 text-center border border-border/50 w-full">
             <div className="text-4xl mb-4">📝</div>
             <h2 className="font-semibold text-card-foreground mb-2">
               Вопросы скоро появятся
