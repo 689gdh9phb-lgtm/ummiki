@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { BackButton } from '@/components/back-button'
 import { QuizCategoryCard } from '@/components/quiz-category-card'
-import { quizCategories } from '@/lib/data/quizzes'
+import { quizSections } from '@/lib/data/quizzes'
 
 export default function QuizzesPage() {
   return (
@@ -24,19 +24,19 @@ export default function QuizzesPage() {
           Викторины
         </h1>
         <p className="text-muted-foreground text-sm">
-          Выбери тему и проверь свои знания!
+          Выбери раздел и проверь свои знания!
         </p>
       </motion.div>
 
-      {/* Categories */}
+      {/* Sections */}
       <div className="space-y-3">
-        {quizCategories.map((category, index) => (
+        {quizSections.map((section, index) => (
           <QuizCategoryCard
-            key={category.id}
-            id={category.id}
-            title={category.title}
-            emoji={category.emoji}
-            description={category.description}
+            key={section.id}
+            href={`/quizzes/${section.id}`}
+            title={section.title}
+            emoji={section.emoji}
+            description={`${section.topics.length} тем`}
             index={index}
           />
         ))}

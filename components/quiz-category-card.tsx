@@ -5,18 +5,18 @@ import Link from 'next/link'
 import { useTelegram } from './telegram-provider'
 
 interface QuizCategoryCardProps {
-  id: string
+  href: string
   title: string
   emoji: string
   description: string
   index: number
 }
 
-export function QuizCategoryCard({ id, title, emoji, description, index }: QuizCategoryCardProps) {
+export function QuizCategoryCard({ href, title, emoji, description, index }: QuizCategoryCardProps) {
   const { hapticFeedback } = useTelegram()
 
   return (
-    <Link href={`/quizzes/${id}`} onClick={() => hapticFeedback('light')}>
+    <Link href={href} onClick={() => hapticFeedback('light')}>
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
