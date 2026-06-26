@@ -95,6 +95,26 @@ button, a {
   user-select: none;
 }
 
+/* Basic content protection: block selection, copy, and image drag/save */
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Keep form fields usable */
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 4px;

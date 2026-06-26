@@ -3,6 +3,7 @@ import { Montserrat, Amiri } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { TelegramProvider } from '@/components/telegram-provider'
+import { ContentProtection } from '@/components/content-protection'
 
 const montserrat = Montserrat({ 
   subsets: ['latin', 'cyrillic'],
@@ -63,6 +64,7 @@ export default function RootLayout({
         <script src="https://telegram.org/js/telegram-web-app.js" />
       </head>
       <body className={`${montserrat.variable} ${amiri.variable} font-sans antialiased`}>
+        <ContentProtection />
         <TelegramProvider>
           {children}
         </TelegramProvider>
