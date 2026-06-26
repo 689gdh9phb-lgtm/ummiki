@@ -1633,7 +1633,6 @@ export const quizSections: QuizSection[] = [
     topics: [
       { id: 'quran-numbers', title: 'Коран в цифрах', questions: quranNumbersQuestions },
       { id: 'quran-which-surah', title: 'Какая это сура Корана?', questions: quranWhichSurahQuestions },
-      { id: 'quran-continue-ayah', title: 'Продолжи аят из Корана', questions: emptyQuestions(10) },
       { id: 'quran-revelation', title: 'Ниспослание Корана', questions: quranRevelationQuestions },
       { id: 'quran-angels', title: 'Ангелы в Коране', questions: quranAngelsQuestions },
       { id: 'quran-jinn', title: 'Джинны в Коране', questions: quranJinnQuestions },
@@ -1684,7 +1683,6 @@ export const quizSections: QuizSection[] = [
     topics: [
       { id: 'prayer-namaz', title: 'Намаз', questions: emptyQuestions(10) },
       { id: 'prayer-what-breaks', title: 'Что нарушает намаз?', questions: emptyQuestions(10) },
-      { id: 'prayer-mosque-adab', title: 'Адабы в мечети', questions: emptyQuestions(10) },
       { id: 'prayer-azkar-dua', title: 'Азкары и дуа', questions: emptyQuestions(10) },
     ],
   },
@@ -1697,6 +1695,7 @@ export const quizSections: QuizSection[] = [
       { id: 'adab-friendship', title: 'Адабы дружбы', questions: emptyQuestions(10) },
       { id: 'adab-learning', title: 'Адабы обучения', questions: emptyQuestions(10) },
       { id: 'adab-parents', title: 'Адабы по отношению к родителям', questions: emptyQuestions(10) },
+      { id: 'adab-mosque', title: 'Адабы в мечети', questions: emptyQuestions(10) },
     ],
   },
   {
