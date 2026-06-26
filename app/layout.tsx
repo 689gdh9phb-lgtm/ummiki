@@ -22,6 +22,16 @@ export const metadata: Metadata = {
   description: 'Играй, читай и изучай вместе с Уммики! Исламское образовательное приложение для детей.',
   generator: 'v0.app',
   manifest: '/manifest.json',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
   icons: {
     icon: [
       { url: '/favicon.svg', type: 'image/svg+xml' },
