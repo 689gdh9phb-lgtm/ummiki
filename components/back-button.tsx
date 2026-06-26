@@ -7,15 +7,24 @@ import { useTelegram } from './telegram-provider'
 
 interface BackButtonProps {
   label?: string
+  /**
+   * Explicit destination to navigate to. When provided, navigation is
+   * deterministic (hierarchical) instead of relying on browser history.
+   */
+  href?: string
 }
 
-export function BackButton({ label = 'Назад' }: BackButtonProps) {
+export function BackButton({ label = 'Назад', href }: BackButtonProps) {
   const router = useRouter()
   const { hapticFeedback } = useTelegram()
 
   const handleBack = () => {
     hapticFeedback('light')
-    router.back()
+    if (href) {
+      router.push(href)
+    } else {
+      router.back()
+    }
   }
 
   return (

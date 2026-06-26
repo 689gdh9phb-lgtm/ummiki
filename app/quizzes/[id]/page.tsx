@@ -39,7 +39,7 @@ export default function SectionPage({ params }: SectionPageProps) {
                      px-5 py-6 pb-12 safe-area-inset">
       {/* Header */}
       <div className="mb-6">
-        <BackButton label="Викторины" />
+        <BackButton label="Викторины" href="/quizzes" />
       </div>
 
       <motion.div

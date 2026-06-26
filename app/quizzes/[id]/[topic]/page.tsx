@@ -44,7 +44,7 @@ export default function TopicPage({ params }: TopicPageProps) {
       {/* Header - compact */}
       <div className="px-5 pt-5 pb-3 flex-shrink-0">
         <div className="mb-3">
-          <BackButton label={section.title} />
+          <BackButton label={section.title} href={`/quizzes/${id}`} />
         </div>
 
         <motion.div

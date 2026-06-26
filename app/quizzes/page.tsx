@@ -12,7 +12,7 @@ export default function QuizzesPage() {
                      px-5 py-6 pb-12 safe-area-inset">
       {/* Header */}
       <div className="mb-6">
-        <BackButton />
+        <BackButton href="/" />
       </div>
 
       <motion.div
