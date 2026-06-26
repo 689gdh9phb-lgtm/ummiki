@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useTelegram } from './telegram-provider'
@@ -11,6 +11,42 @@ interface QuizPlayerProps {
   categoryTitle: string
 }
 
+// Deterministic pseudo-random generator so the option order stays stable
+// across re-renders but varies from question to question.
+function seededRandom(seed: number) {
+  let value = seed % 2147483647
+  if (value <= 0) value += 2147483646
+  return () => {
+    value = (value * 16807) % 2147483647
+    return (value - 1) / 2147483646
+  }
+}
+
+// Shuffle the answer options of each question so the correct answer is not
+// always in the same position, while keeping the correct answer text intact.
+function shuffleQuestionOptions(questions: Question[]): Question[] {
+  return questions.map((q, qIndex) => {
+    const options = q.options ?? []
+    if (options.length <= 1) return q
+
+    // Seed combines the question id and its index so the order is unique
+    // per question but deterministic between renders.
+    const rand = seededRandom((q.id || qIndex + 1) * 97 + options.length * 13 + qIndex * 7)
+    const indices = options.map((_, i) => i)
+
+    // Fisher-Yates shuffle with the seeded generator.
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1))
+      ;[indices[i], indices[j]] = [indices[j], indices[i]]
+    }
+
+    const shuffledOptions = indices.map(i => options[i])
+    const newCorrectAnswer = indices.indexOf(q.correctAnswer)
+
+    return { ...q, options: shuffledOptions, correctAnswer: newCorrectAnswer }
+  })
+}
+
 export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -19,9 +55,11 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
   const { hapticFeedback } = useTelegram()
   const router = useRouter()
 
-  const currentQuestion = questions[currentIndex]
+  const shuffledQuestions = useMemo(() => shuffleQuestionOptions(questions), [questions])
+
+  const currentQuestion = shuffledQuestions[currentIndex]
   const isCorrect = selectedAnswer === currentQuestion?.correctAnswer
-  const progress = ((currentIndex + 1) / questions.length) * 100
+  const progress = ((currentIndex + 1) / shuffledQuestions.length) * 100
 
   const handleAnswer = (answerIndex: number) => {
     if (selectedAnswer !== null) return
@@ -39,7 +77,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
   const handleNext = () => {
     hapticFeedback('light')
 
-    if (currentIndex < questions.length - 1) {
+    if (currentIndex < shuffledQuestions.length - 1) {
       setCurrentIndex(prev => prev + 1)
       setSelectedAnswer(null)
       setShowExplanation(false)
@@ -123,7 +161,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
       <div className="mb-4 flex-shrink-0">
         <div className="flex justify-between items-center mb-2">
           <span className="text-sm font-medium text-muted-foreground">
-            Вопрос {currentIndex + 1} из {questions.length}
+            Вопрос {currentIndex + 1} из {shuffledQuestions.length}
           </span>
         </div>
         <div className="h-2 bg-secondary rounded-full overflow-hidden">
@@ -218,7 +256,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
               className="w-full py-4 rounded-2xl bg-primary text-primary-foreground flex-shrink-0 mt-3
                          font-semibold shadow-[0_4px_20px_rgba(123,63,242,0.3)]"
             >
-              {currentIndex < questions.length - 1 ? 'Следующий вопрос' : 'Завершить'}
+              {currentIndex < shuffledQuestions.length - 1 ? 'Следующий вопрос' : 'Завершить'}
             </motion.button>
           )}
         </motion.div>

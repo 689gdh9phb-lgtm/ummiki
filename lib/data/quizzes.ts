@@ -1968,7 +1968,7 @@ export const quizSections: QuizSection[] = [
   },
   {
     id: 'aqidah',
-    title: 'Основы веры (Акыда)',
+    title: 'Вера',
     emoji: '🕌',
     description: 'Фундамент исламского вероубеждения',
     topics: [
