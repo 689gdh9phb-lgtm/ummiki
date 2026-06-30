@@ -3267,6 +3267,75 @@ const marathon50Questions: Question[] = [
   prayerNamazQuestions[2],
 ].map((q, i) => ({ ...q, id: i + 1 }))
 
+// "Марафон «100 вопросов»" — 50 new existing questions (interleaved across the
+// 6 sections, using indices NOT used by marathon50Questions to avoid repeats)
+// placed strictly BEFORE the existing 50 from marathon50Questions, giving 100.
+// Questions are reused unchanged; only the id is remapped to 1..100.
+const marathon100Questions: Question[] = [
+  // --- New 50 (first half), interleaved by section ---
+  // round 1
+  quranNumbersQuestions[2],
+  aqidahImanIslamIhsanQuestions[2],
+  prophetsScripturesQuestions[2],
+  mothersOfBelieversQuestions[2],
+  prayerNamazQuestions[3],
+  adabHeartQuestions[2],
+  // round 2
+  quranWhichSurahQuestions[2],
+  aqidahParadiseQuestions[2],
+  prophetsGivenToQuestions[2],
+  prophetChildhoodQuestions[2],
+  prayerWhatBreaksQuestions[2],
+  adabFamilyQuestions[2],
+  // round 3
+  quranRevelationQuestions[2],
+  aqidahHellQuestions[2],
+  prophetsByDescriptionQuestions[2],
+  tenCompanionsQuestions[2],
+  prayerAzkarDuaQuestions[2],
+  adabSocietyQuestions[2],
+  // round 4
+  quranAngelsQuestions[2],
+  aqidahJudgmentDayQuestions[2],
+  prophetsCraftsQuestions[2],
+  prophetMuhammadQuestions[2],
+  prayerWuduQuestions[2],
+  adabKnowledgeQuestions[2],
+  // round 5
+  quranJinnQuestions[2],
+  aqidahImanIslamIhsanQuestions[3],
+  prophetsScripturesQuestions[3],
+  mothersOfBelieversQuestions[3],
+  prayerNamazQuestions[4],
+  adabMosqueWorshipQuestions[2],
+  // round 6
+  quranAnimalsQuestions[2],
+  aqidahParadiseQuestions[3],
+  prophetsGivenToQuestions[3],
+  prophetChildhoodQuestions[3],
+  prayerWhatBreaksQuestions[3],
+  adabHeartQuestions[3],
+  // round 7
+  quranNumbersQuestions[3],
+  aqidahHellQuestions[3],
+  prophetsByDescriptionQuestions[3],
+  tenCompanionsQuestions[3],
+  prayerAzkarDuaQuestions[3],
+  adabFamilyQuestions[3],
+  // round 8
+  quranWhichSurahQuestions[3],
+  aqidahJudgmentDayQuestions[3],
+  prophetsCraftsQuestions[3],
+  prophetMuhammadQuestions[3],
+  prayerWuduQuestions[3],
+  adabSocietyQuestions[3],
+  // remaining (Коран + Намаз)
+  quranRevelationQuestions[3],
+  prayerNamazQuestions[5],
+  // --- Existing 50 from the "Марафон «50 вопросов»" topic ---
+  ...marathon50Questions,
+].map((q, i) => ({ ...q, id: i + 1 }))
+
 export const quizSections: QuizSection[] = [
   {
     id: 'quran',
@@ -3350,7 +3419,7 @@ export const quizSections: QuizSection[] = [
     description: 'Большие испытания на знания',
     topics: [
       { id: 'marathon-50', title: 'Марафон «50 вопросов»', questions: marathon50Questions },
-      { id: 'marathon-100', title: 'Марафон «100 вопросов»', questions: emptyQuestions(100) },
+      { id: 'marathon-100', title: 'Марафон «100 вопросов»', questions: marathon100Questions },
     ],
   },
 ]
