@@ -3202,6 +3202,71 @@ const adabMosqueWorshipQuestions: Question[] = [
   },
 ]
 
+// "Марафон «50 вопросов»" — 50 existing questions drawn from 6 sections,
+// interleaved for variety. Questions are reused unchanged; only the id is
+// remapped to stay unique within this combined quiz.
+const marathon50Questions: Question[] = [
+  // round 1
+  quranNumbersQuestions[0],
+  aqidahImanIslamIhsanQuestions[0],
+  prophetsScripturesQuestions[0],
+  mothersOfBelieversQuestions[0],
+  prayerNamazQuestions[0],
+  adabHeartQuestions[0],
+  // round 2
+  quranWhichSurahQuestions[0],
+  aqidahParadiseQuestions[0],
+  prophetsGivenToQuestions[0],
+  prophetChildhoodQuestions[0],
+  prayerWhatBreaksQuestions[0],
+  adabFamilyQuestions[0],
+  // round 3
+  quranRevelationQuestions[0],
+  aqidahHellQuestions[0],
+  prophetsByDescriptionQuestions[0],
+  tenCompanionsQuestions[0],
+  prayerAzkarDuaQuestions[0],
+  adabSocietyQuestions[0],
+  // round 4
+  quranAngelsQuestions[0],
+  aqidahJudgmentDayQuestions[0],
+  prophetsCraftsQuestions[0],
+  prophetMuhammadQuestions[0],
+  prayerWuduQuestions[0],
+  adabKnowledgeQuestions[0],
+  // round 5
+  quranJinnQuestions[0],
+  aqidahImanIslamIhsanQuestions[1],
+  prophetsScripturesQuestions[1],
+  mothersOfBelieversQuestions[1],
+  prayerNamazQuestions[1],
+  adabMosqueWorshipQuestions[0],
+  // round 6
+  quranAnimalsQuestions[0],
+  aqidahParadiseQuestions[1],
+  prophetsGivenToQuestions[1],
+  prophetChildhoodQuestions[1],
+  prayerWhatBreaksQuestions[1],
+  adabHeartQuestions[1],
+  // round 7
+  quranNumbersQuestions[1],
+  aqidahHellQuestions[1],
+  prophetsByDescriptionQuestions[1],
+  tenCompanionsQuestions[1],
+  prayerAzkarDuaQuestions[1],
+  adabFamilyQuestions[1],
+  // round 8
+  quranWhichSurahQuestions[1],
+  aqidahJudgmentDayQuestions[1],
+  prophetsCraftsQuestions[1],
+  prophetMuhammadQuestions[1],
+  prayerWuduQuestions[1],
+  adabSocietyQuestions[1],
+  // remaining (Коран + Намаз)
+  quranRevelationQuestions[1],
+  prayerNamazQuestions[2],
+].map((q, i) => ({ ...q, id: i + 1 }))
+
 export const quizSections: QuizSection[] = [
   {
     id: 'quran',
@@ -3284,7 +3349,7 @@ export const quizSections: QuizSection[] = [
     emoji: '🏆',
     description: 'Большие испытания на знания',
     topics: [
-      { id: 'marathon-50', title: 'Марафон «50 вопросов»', questions: emptyQuestions(50) },
+      { id: 'marathon-50', title: 'Марафон «50 вопросов»', questions: marathon50Questions },
       { id: 'marathon-100', title: 'Марафон «100 вопросов»', questions: emptyQuestions(100) },
     ],
   },
