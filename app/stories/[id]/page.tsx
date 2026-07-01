@@ -82,26 +82,38 @@ export default function StoryDetailPage({ params }: StoryDetailPageProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
           className="bg-card rounded-2xl p-5 shadow-[0_4px_16px_rgba(123,63,242,0.06)] 
-                     border border-border/50 mb-6"
+                     border border-border/50 mb-6 space-y-4"
         >
-          <p className="text-foreground leading-relaxed text-base">
-            {story.content}
-          </p>
+          {story.content.map((paragraph, i) => (
+            <p key={i} className="text-foreground leading-relaxed text-base">
+              {paragraph}
+            </p>
+          ))}
         </motion.div>
 
-        {/* Lesson */}
+        {/* Questions */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.4 }}
         >
           <h2 className="text-lg font-semibold text-foreground mb-3">
-            Урок этой истории
+            Вопросы
           </h2>
           <div className="bg-secondary/50 rounded-2xl p-5 border border-border/30">
-            <p className="text-foreground/90 leading-relaxed text-sm">
-              {story.lesson}
-            </p>
+            <ol className="space-y-3">
+              {story.questions.map((question, i) => (
+                <li key={i} className="flex gap-3">
+                  <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 
+                                   rounded-full bg-primary/10 text-primary text-sm font-semibold">
+                    {i + 1}
+                  </span>
+                  <span className="text-foreground/90 leading-relaxed text-sm pt-0.5">
+                    {question}
+                  </span>
+                </li>
+              ))}
+            </ol>
           </div>
         </motion.div>
       </div>
