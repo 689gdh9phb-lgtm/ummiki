@@ -19,17 +19,22 @@ const amiri = Amiri({
 })
 
 export const metadata: Metadata = {
-  title: 'Уммики - Исламское приложение для детей',
-  description: 'Играй, читай и изучай вместе с Уммики! Исламское образовательное приложение для детей.',
-  generator: 'v0.app',
+  title: 'Приложение',
+  description: '',
   manifest: '/manifest.json',
   robots: {
     index: false,
     follow: false,
     nocache: true,
+    noarchive: true,
+    nosnippet: true,
+    notranslate: true,
+    noimageindex: true,
     googleBot: {
       index: false,
       follow: false,
+      noarchive: true,
+      nosnippet: true,
       noimageindex: true,
     },
   },
