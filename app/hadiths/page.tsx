@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion'
 import { BackButton } from '@/components/back-button'
-import { HadithCard } from '@/components/hadith-card'
-import { hadiths } from '@/lib/data/hadiths'
+import { HadithSectionCard } from '@/components/hadith-section-card'
+import { hadithSections } from '@/lib/data/hadiths'
 
 export default function HadithsPage() {
   return (
@@ -11,7 +11,7 @@ export default function HadithsPage() {
                      px-5 py-6 pb-12 safe-area-inset">
       {/* Header */}
       <div className="mb-6">
-        <BackButton />
+        <BackButton href="/" />
       </div>
 
       <motion.div
@@ -24,14 +24,14 @@ export default function HadithsPage() {
           Хадисы
         </h1>
         <p className="text-muted-foreground text-sm">
-          Мудрость Пророка (мир ему и благословение) для детей
+          Выбери тему, чтобы читать хадисы Пророка (мир ему и благословение)
         </p>
       </motion.div>
 
-      {/* Hadith cards */}
-      <div className="space-y-20">
-        {hadiths.map((hadith, index) => (
-          <HadithCard key={hadith.id} hadith={hadith} index={index} />
+      {/* Section cards */}
+      <div className="space-y-4">
+        {hadithSections.map((section, index) => (
+          <HadithSectionCard key={section.id} section={section} index={index} />
         ))}
       </div>
     </main>

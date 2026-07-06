@@ -340,7 +340,7 @@ export const hadiths: Hadith[] = [
     readingTime: '2 мин',
     image: '/images/hadiths/speech.png',
     hadithText: 'Аиша (да будет доволен ею Аллах) передаёт, что посланник Аллаха ﷺ сказал: «Самыми ненавистными людьми перед Аллахом являются заядлые спорщики».',
-    explanation: 'А��лах не любит тех, кто постоянно спорит и не принимает истину. Спор ради спора рождает вражду. Лучше украшать себя добрыми качествами и мягкостью. Нужно очищать сердце от плохого, ведь если сердце здорово — здорово и всё тело.',
+    explanation: 'Аллах не любит тех, кто постоянно спорит и не принимает истину. Спор ради спора рождает вражду. Лучше украшать себя добрыми качествами и мягкостью. Нужно очищать сердце от плохого, ведь если сердце здорово — здорово и всё тело.',
     source: 'Муслим'
   },
   {
@@ -421,7 +421,7 @@ export const hadiths: Hadith[] = [
     readingTime: '2 мин',
     image: '/images/hadiths/modesty.png',
     hadithText: 'Сахль ибн Са‘д (да будет доволен им Аллах) передаёт, что посланник Аллаха ﷺ сказал: «Испрашивать разрешение (было) велено из-за взоров».',
-    explanation: 'Прежде чем войти в чужой дом или комнату, нужно спросить разрешения. Это оберегает то, что не следует видеть посторонним. Нельзя подглядывать в чужие дома. Ислам учит уважать лич��ое пространство других.',
+    explanation: 'Прежде чем войти в чужой дом или комнату, нужно спросить разрешения. Это оберегает то, что не следует видеть посторонним. Нельзя подглядывать в чужие дома. Ислам учит уважать личное пространство других.',
     source: 'Аль-Бухари, Муслим'
   },
   {
@@ -461,3 +461,132 @@ export const hadiths: Hadith[] = [
     source: 'Аль-Бухари, Муслим'
   }
 ]
+
+export interface HadithSection {
+  id: string
+  title: string
+  description: string
+  cover: string
+  hadithIds: string[]
+}
+
+export const hadithSections: HadithSection[] = [
+  {
+    id: 'faith',
+    title: 'Вера и ахират',
+    description: 'Основы веры и мысли о вечной жизни',
+    cover: '/images/hadiths/hereafter.png',
+    hadithIds: [
+      'intention',
+      'love-for-others',
+      'modesty-faith',
+      'every-good-deed-eternal-life',
+      'world-prison',
+      'prophet-and-hour',
+      'talqeen',
+      'visiting-graves',
+      'no-innovation'
+    ]
+  },
+  {
+    id: 'worship',
+    title: 'Поклонение',
+    description: 'Намаз, омовение, пост и Коран',
+    cover: '/images/hadiths/wc-witr.png',
+    hadithIds: [
+      'careful-wudu',
+      'suhoor',
+      'witr',
+      'fajr-sunnah',
+      'asr-prayer',
+      'duha-prayer',
+      'two-cool-prayers',
+      'pray-like-me',
+      'obligatory-prayer-first',
+      'learn-quran',
+      'consistent-deeds'
+    ]
+  },
+  {
+    id: 'character',
+    title: 'Добрый нрав и чистое сердце',
+    description: 'Милость, скромность и добрые качества',
+    cover: '/images/hadiths/wc-every-good-deed.png',
+    hadithIds: [
+      'mercy',
+      'humility',
+      'strong-believer',
+      'rich-heart',
+      'sincerity',
+      'every-good-deed',
+      'shyness-good',
+      'make-things-easy',
+      'allah-loves-gentleness',
+      'injustice-darkness',
+      'avoid-suspicion',
+      'learn-from-mistakes'
+    ]
+  },
+  {
+    id: 'speech',
+    title: 'Язык и общение',
+    description: 'Добрые слова и что говорить нельзя',
+    cover: '/images/hadiths/wc-good-word-charity.png',
+    hadithIds: [
+      'good-speech',
+      'good-word-charity',
+      'no-insulting',
+      'no-gossip',
+      'no-arguing',
+      'verify-news'
+    ]
+  },
+  {
+    id: 'family',
+    title: 'Семья, друзья и общество',
+    description: 'Родители, родственники и соседи',
+    cover: '/images/hadiths/mother.png',
+    hadithIds: [
+      'mother',
+      'family-ties',
+      'asking-permission',
+      'lower-gaze'
+    ]
+  },
+  {
+    id: 'adab',
+    title: 'Адаб каждый день',
+    description: 'Хорошие манеры в обычных делах',
+    cover: '/images/hadiths/rain.png',
+    hadithIds: [
+      'drinking-manners',
+      'eating-manners',
+      'dua-rain',
+      'fire-safety'
+    ]
+  },
+  {
+    id: 'trials',
+    title: 'Испытания и защита',
+    description: 'Терпение, здоровье и предостережения',
+    cover: '/images/hadiths/protection.png',
+    hadithIds: [
+      'trials-blessing',
+      'intoxicants-haram',
+      'avoid-face',
+      'evil-eye'
+    ]
+  }
+]
+
+export function getHadithSection(sectionId: string): HadithSection | undefined {
+  return hadithSections.find((section) => section.id === sectionId)
+}
+
+export function getSectionHadiths(sectionId: string): Hadith[] {
+  const section = getHadithSection(sectionId)
+  if (!section) return []
+  return section.hadithIds
+    .map((id) => hadiths.find((h) => h.id === id))
+    .filter((h): h is Hadith => Boolean(h))
+}

@@ -9,13 +9,14 @@ import type { Hadith } from '@/lib/data/hadiths'
 interface HadithCardProps {
   hadith: Hadith
   index: number
+  sectionId: string
 }
 
-export function HadithCard({ hadith, index }: HadithCardProps) {
+export function HadithCard({ hadith, index, sectionId }: HadithCardProps) {
   const { hapticFeedback } = useTelegram()
 
   return (
-    <Link href={`/hadiths/${hadith.id}`} onClick={() => hapticFeedback('light')}>
+    <Link href={`/hadiths/${sectionId}/${hadith.id}`} onClick={() => hapticFeedback('light')}>
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
