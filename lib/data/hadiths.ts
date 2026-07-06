@@ -383,7 +383,7 @@ export const hadiths: Hadith[] = [
     id: 'drinking-manners',
     title: 'Этикет питья',
     readingTime: '2 мин',
-    image: '/images/hadiths/good-manners.jpg',
+    image: '/images/hadiths/wc-drinking-manners.png',
     hadithText: 'Абу Къатада (да будет доволен им Аллах) передаёт, что пророк ﷺ сказал: «Когда кто-либо из вас будет пить, пусть не дышит в сосуд».',
     explanation: 'Ислам учит нас даже правилам питья. Когда пьёшь, не нужно дышать прямо в стакан — лучше отодвинуть его. Это чисто и красиво, а также защищает от передачи болезней. Это касается любых напитков, не только воды.',
     source: 'Аль-Бухари, Муслим'
@@ -392,7 +392,7 @@ export const hadiths: Hadith[] = [
     id: 'eating-manners',
     title: 'Скромность в еде',
     readingTime: '2 мин',
-    image: '/images/hadiths/good-manners.jpg',
+    image: '/images/hadiths/wc-eating-manners.png',
     hadithText: 'Абу Джухайфа (да будет доволен им Аллах) передаёт, что посланник Аллаха ﷺ сказал: «Я во время еды не облокачиваюсь».',
     explanation: 'Пророк ﷺ ел скромно и не облокачивался, как делают те, кто ест слишком много. Это учит нас есть умеренно и не наполнять живот. Скромность в еде — часть хороших манер. Ислам заботится даже о таких мелочах.',
     source: 'Аль-Бухари'
@@ -401,7 +401,7 @@ export const hadiths: Hadith[] = [
     id: 'dua-rain',
     title: 'Дуа при дожде',
     readingTime: '2 мин',
-    image: '/images/hadiths/rain.png',
+    image: '/images/hadiths/wc-dua-rain.png',
     hadithText: 'Аиша (да будет доволен ею Аллах) передаёт, что когда посланник Аллаха ﷺ видел дождь, то говорил: «О Аллах, пусть (этот) дождь принесёт пользу».',
     explanation: 'Пророк ﷺ заботился о людях и, видя дождь, просил, чтобы он был полезным, а не вредным. Это показывает его доброту. Во время дождя хорошо обращаться к Аллаху с мольбой — это время, когда мольба принимается.',
     source: 'Аль-Бухари'
@@ -410,7 +410,7 @@ export const hadiths: Hadith[] = [
     id: 'fire-safety',
     title: 'Безопасность перед сном',
     readingTime: '2 мин',
-    image: '/images/hadiths/fire-safety.png',
+    image: '/images/hadiths/wc-fire-safety.png',
     hadithText: 'Ибн Умар (да будет доволен им Аллах) передаёт, что пророк ﷺ сказал: «Не оставляйте огонь в ваших домах, когда вы спите».',
     explanation: 'Перед сном нужно погасить огонь, чтобы он не причинил вреда. Ислам заботится о безопасности людей и учит беречь себя. Это значит: принимай меры предосторожности, чтобы уберечься от беды. Религия совершенна во всём.',
     source: 'Аль-Бухари, Муслим'
@@ -545,7 +545,7 @@ export const hadithSections: HadithSection[] = [
     id: 'family',
     title: 'Семья, друзья и общество',
     description: 'Родители, родственники и соседи',
-    cover: '/images/hadiths/mother.png',
+    cover: '/images/hadiths/wc-family-cover.png',
     hadithIds: [
       'mother',
       'family-ties',
@@ -557,7 +557,7 @@ export const hadithSections: HadithSection[] = [
     id: 'adab',
     title: 'Адаб каждый день',
     description: 'Хорошие манеры в обычных делах',
-    cover: '/images/hadiths/rain.png',
+    cover: '/images/hadiths/wc-adab-cover.png',
     hadithIds: [
       'drinking-manners',
       'eating-manners',
@@ -569,7 +569,7 @@ export const hadithSections: HadithSection[] = [
     id: 'trials',
     title: 'Испытания и защита',
     description: 'Терпение, здоровье и предостережения',
-    cover: '/images/hadiths/protection.png',
+    cover: '/images/hadiths/wc-trials-cover.png',
     hadithIds: [
       'trials-blessing',
       'intoxicants-haram',
