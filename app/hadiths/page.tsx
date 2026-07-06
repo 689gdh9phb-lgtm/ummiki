@@ -24,7 +24,7 @@ export default function HadithsPage() {
           Хадисы
         </h1>
         <p className="text-muted-foreground text-sm">
-          Выбери тему, чтобы читать хадисы Пророка (мир ему и благословение)
+          Выбери тему, чтобы читать хадисы Пророка ﷺ
         </p>
       </motion.div>
 
