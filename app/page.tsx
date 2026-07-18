@@ -7,7 +7,7 @@ const menuItems = [
   { title: 'Викторины', pill: 'Играть', emoji: '🧠', href: '/quizzes' },
   { title: 'Истории', pill: 'Читать', emoji: '📖', href: '/stories' },
   { title: 'Хадисы', pill: 'Читать', emoji: '🕌', href: '/hadiths' },
-  { title: 'Арабский\nалфавит', pill: 'Изучать', emoji: '🔤', href: '/alphabet' },
+  { title: '99 имён\nАллаха', pill: 'Изучать', emoji: '🕋', href: '/names' },
 ]
 
 export default function HomePage() {
