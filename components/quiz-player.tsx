@@ -11,10 +11,23 @@ interface QuizPlayerProps {
   categoryTitle: string
 }
 
+// Hash an integer so that sequential seeds (e.g. consecutive question ids)
+// produce well-scattered values instead of correlated ones. Without this,
+// a linear seed fed into the LCG below tends to yield the same permutation
+// for questions that share the same option count, which is exactly what put
+// every correct answer in the same slot across a topic.
+function hashSeed(n: number) {
+  let h = n >>> 0
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b)
+  h = Math.imul(h ^ (h >>> 16), 0x45d9f3b)
+  h = (h ^ (h >>> 16)) >>> 0
+  return h
+}
+
 // Deterministic pseudo-random generator so the option order stays stable
 // across re-renders but varies from question to question.
 function seededRandom(seed: number) {
-  let value = seed % 2147483647
+  let value = hashSeed(seed) % 2147483647
   if (value <= 0) value += 2147483646
   return () => {
     value = (value * 16807) % 2147483647
