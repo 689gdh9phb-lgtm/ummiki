@@ -35,28 +35,72 @@ function seededRandom(seed: number) {
   }
 }
 
+// Deterministic Fisher-Yates shuffle of an array using a seeded generator.
+function seededShuffle<T>(arr: T[], rand: () => number): T[] {
+  const out = [...arr]
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1))
+    ;[out[i], out[j]] = [out[j], out[i]]
+  }
+  return out
+}
+
+// Assign a target slot for the correct answer of every question so that the
+// answer lands in each position about equally often — instead of relying on a
+// seeded shuffle happening to be uniform (which clustered correct answers in
+// one slot). Questions are grouped by their number of options; within each
+// group the target positions are laid out in blocks that are shuffled
+// permutations of [0..n-1], guaranteeing an even, non-sequential spread.
+function buildTargetPositions(questions: Question[]): Record<number, number> {
+  const groups: Record<number, number[]> = {}
+  questions.forEach((q, i) => {
+    const n = (q.options ?? []).length
+    if (n > 1) (groups[n] ??= []).push(i)
+  })
+
+  const targets: Record<number, number> = {}
+  for (const key of Object.keys(groups)) {
+    const n = Number(key)
+    const qIndices = groups[n]
+    const rand = seededRandom(n * 7919 + qIndices.length * 31 + 17)
+    let sequence: number[] = []
+    while (sequence.length < qIndices.length) {
+      sequence = sequence.concat(seededShuffle([...Array(n).keys()], rand))
+    }
+    qIndices.forEach((qi, k) => {
+      targets[qi] = sequence[k]
+    })
+  }
+  return targets
+}
+
 // Shuffle the answer options of each question so the correct answer is not
 // always in the same position, while keeping the correct answer text intact.
 function shuffleQuestionOptions(questions: Question[]): Question[] {
+  const targets = buildTargetPositions(questions)
+
   return questions.map((q, qIndex) => {
     const options = q.options ?? []
     if (options.length <= 1) return q
 
-    // Seed combines the question id and its index so the order is unique
-    // per question but deterministic between renders.
-    const rand = seededRandom((q.id || qIndex + 1) * 97 + options.length * 13 + qIndex * 7)
-    const indices = options.map((_, i) => i)
+    const targetPos = targets[qIndex] ?? 0
+    const correctOption = options[q.correctAnswer]
 
-    // Fisher-Yates shuffle with the seeded generator.
-    for (let i = indices.length - 1; i > 0; i--) {
-      const j = Math.floor(rand() * (i + 1))
-      ;[indices[i], indices[j]] = [indices[j], indices[i]]
+    // Shuffle the distractors deterministically so their order also varies.
+    const rand = seededRandom((q.id || qIndex + 1) * 2654435761)
+    const distractors = seededShuffle(
+      options.filter((_, i) => i !== q.correctAnswer),
+      rand,
+    )
+
+    // Place the correct answer at its target slot and fill the rest.
+    const shuffledOptions: string[] = []
+    let d = 0
+    for (let pos = 0; pos < options.length; pos++) {
+      shuffledOptions.push(pos === targetPos ? correctOption : distractors[d++])
     }
 
-    const shuffledOptions = indices.map(i => options[i])
-    const newCorrectAnswer = indices.indexOf(q.correctAnswer)
-
-    return { ...q, options: shuffledOptions, correctAnswer: newCorrectAnswer }
+    return { ...q, options: shuffledOptions, correctAnswer: targetPos }
   })
 }
 
