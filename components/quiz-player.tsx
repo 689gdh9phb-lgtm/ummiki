@@ -109,6 +109,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
   const [showExplanation, setShowExplanation] = useState(false)
   const [isComplete, setIsComplete] = useState(false)
+  const [correctCount, setCorrectCount] = useState(0)
   const { hapticFeedback } = useTelegram()
   const router = useRouter()
 
@@ -125,6 +126,7 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
     setShowExplanation(true)
 
     if (answerIndex === currentQuestion.correctAnswer) {
+      setCorrectCount(prev => prev + 1)
       hapticFeedback('success')
     } else {
       hapticFeedback('error')
@@ -191,10 +193,22 @@ export function QuizPlayer({ questions, categoryTitle }: QuizPlayerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="text-muted-foreground mb-8"
+          className="text-muted-foreground mb-6"
         >
           Ты закончил викторину &quot;{categoryTitle}&quot;
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.55 }}
+          className="mb-8 w-full max-w-xs rounded-2xl bg-secondary/50 border border-border/50 px-6 py-5"
+        >
+          <p className="text-sm text-muted-foreground mb-1">Правильных ответов</p>
+          <p className="text-3xl font-bold text-primary">
+            {correctCount} из {shuffledQuestions.length}
+          </p>
+        </motion.div>
 
         <motion.button
           initial={{ opacity: 0, y: 20 }}
