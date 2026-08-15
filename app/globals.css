@@ -128,3 +128,13 @@ input, textarea {
   background: #D9CCFF;
   border-radius: 4px;
 }
+
+/* Hide scrollbar for horizontal filter rows */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

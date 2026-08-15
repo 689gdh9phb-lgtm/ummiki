@@ -1,6 +1,28 @@
+export type StoryCategory =
+  | 'honesty'
+  | 'kindness'
+  | 'family'
+  | 'self'
+  | 'gratitude'
+
+export interface StoryCategoryOption {
+  id: StoryCategory | 'all'
+  label: string
+}
+
+export const storyCategories: StoryCategoryOption[] = [
+  { id: 'all', label: 'Все' },
+  { id: 'honesty', label: 'Честность' },
+  { id: 'kindness', label: 'Доброта и помощь' },
+  { id: 'family', label: 'Семья и дружба' },
+  { id: 'self', label: 'Работа над собой' },
+  { id: 'gratitude', label: 'Благодарность' },
+]
+
 export interface Story {
   id: string
   title: string
+  category: StoryCategory
   readingTime: string
   image: string
   content: string[]
@@ -11,6 +33,7 @@ export const stories: Story[] = [
   {
     id: 'kupyura',
     title: 'Купюра',
+    category: 'honesty',
     readingTime: '3 мин',
     image: '/images/stories/kupyura.png',
     content: [
@@ -28,6 +51,7 @@ export const stories: Story[] = [
   {
     id: 'samyy-sladkiy-finik',
     title: 'Самый сладкий финик',
+    category: 'kindness',
     readingTime: '3 мин',
     image: '/images/stories/finik.png',
     content: [
@@ -45,6 +69,7 @@ export const stories: Story[] = [
   {
     id: 'treshinka',
     title: 'Трещинка',
+    category: 'honesty',
     readingTime: '3 мин',
     image: '/images/stories/treshinka.png',
     content: [
@@ -62,6 +87,7 @@ export const stories: Story[] = [
   {
     id: 'tihaya-parta',
     title: 'Тихая парта',
+    category: 'kindness',
     readingTime: '3 мин',
     image: '/images/stories/tihaya-parta.png',
     content: [
@@ -79,6 +105,7 @@ export const stories: Story[] = [
   {
     id: 'chistoe-okoshko',
     title: 'Чистое окошко',
+    category: 'family',
     readingTime: '3 мин',
     image: '/images/stories/chistoe-okoshko.png',
     content: [
@@ -96,6 +123,7 @@ export const stories: Story[] = [
   {
     id: 'odeyalo',
     title: 'Одеяло, которое держало крепко',
+    category: 'self',
     readingTime: '3 мин',
     image: '/images/stories/odeyalo.png',
     content: [
@@ -113,6 +141,7 @@ export const stories: Story[] = [
   {
     id: 'tri-monety',
     title: 'Три монеты в кармане',
+    category: 'gratitude',
     readingTime: '3 мин',
     image: '/images/stories/tri-monety.png',
     content: [
@@ -130,6 +159,7 @@ export const stories: Story[] = [
   {
     id: 'chay-s-korochkoy',
     title: 'Чай с корочкой хлеба',
+    category: 'gratitude',
     readingTime: '3 мин',
     image: '/images/stories/chay-s-korochkoy.png',
     content: [
@@ -147,6 +177,7 @@ export const stories: Story[] = [
   {
     id: 'pugovica',
     title: 'Одна пуговица',
+    category: 'kindness',
     readingTime: '3 мин',
     image: '/images/stories/pugovica.png',
     content: [
@@ -164,6 +195,7 @@ export const stories: Story[] = [
   {
     id: 'luzha',
     title: 'Лужа у подъезда',
+    category: 'kindness',
     readingTime: '3 мин',
     image: '/images/stories/luzha.png',
     content: [
@@ -181,6 +213,7 @@ export const stories: Story[] = [
   {
     id: 'karandash',
     title: 'Карандаш с зубчиками',
+    category: 'self',
     readingTime: '3 мин',
     image: '/images/stories/karandash.png',
     content: [
@@ -198,6 +231,7 @@ export const stories: Story[] = [
   {
     id: 'mamina-chashka',
     title: 'Мамина чашка',
+    category: 'family',
     readingTime: '3 мин',
     image: '/images/stories/mamina-chashka.png',
     content: [
@@ -215,6 +249,7 @@ export const stories: Story[] = [
   {
     id: 'chuzhaya-pyaterka',
     title: 'Чужая пятёрка',
+    category: 'self',
     readingTime: '3 мин',
     image: '/images/stories/chuzhaya-pyaterka.png',
     content: [
@@ -232,6 +267,7 @@ export const stories: Story[] = [
   {
     id: 'pechenye',
     title: 'Печенье по честной цене',
+    category: 'honesty',
     readingTime: '3 мин',
     image: '/images/stories/pechenye.png',
     content: [
@@ -249,6 +285,7 @@ export const stories: Story[] = [
   {
     id: 'kovyor-more',
     title: 'Ковёр, который стал морем',
+    category: 'family',
     readingTime: '3 мин',
     image: '/images/stories/kovyor-more.png',
     content: [
