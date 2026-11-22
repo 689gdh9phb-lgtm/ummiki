@@ -1,9 +1,7 @@
 'use client'
 
-import { useState, type DragEvent } from 'react'
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 import {
-  ArrowDown,
-  ArrowUp,
   Bell,
   BookOpen,
   Brain,
@@ -68,8 +66,10 @@ function MatchPairsGame({
   successText: string
 }) {
   const [selectedSource, setSelectedSource] = useState<string | null>(null)
+  const [draggingSource, setDraggingSource] = useState<string | null>(null)
   const [matches, setMatches] = useState<Record<string, string>>({})
   const [feedback, setFeedback] = useState('')
+  const skipSourceClick = useRef(false)
   const completed = Object.keys(matches).length === sources.length
   const usedTargets = new Set(Object.values(matches))
 
@@ -87,12 +87,6 @@ function MatchPairsGame({
     if (Object.keys(nextMatches).length === sources.length) onComplete?.()
   }
 
-  const handleDrop = (event: DragEvent<HTMLButtonElement>, targetId: string) => {
-    event.preventDefault()
-    const sourceId = event.dataTransfer.getData('text/plain') || selectedSource
-    if (sourceId) assign(sourceId, targetId)
-  }
-
   return (
     <div>
       <div className="grid grid-cols-2 gap-2.5">
@@ -103,36 +97,47 @@ function MatchPairsGame({
             <button
               key={id}
               type="button"
-              draggable={!isMatched}
-              data-allow-drag="true"
               aria-pressed={isSelected}
               disabled={isMatched}
-              onDragStart={(event) => {
-                event.dataTransfer.setData('text/plain', id)
-                event.dataTransfer.effectAllowed = 'move'
+              onPointerDown={(event) => {
+                if (!(event.target instanceof Element) || !event.target.closest('[data-drag-handle]')) return
+                event.currentTarget.setPointerCapture(event.pointerId)
+                setDraggingSource(id)
+                setSelectedSource(null)
               }}
+              onPointerUp={(event) => {
+                if (draggingSource !== id) return
+                const target = event.currentTarget.ownerDocument.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-match-target]')
+                if (target?.dataset.matchTarget) {
+                  skipSourceClick.current = true
+                  assign(id, target.dataset.matchTarget)
+                }
+                setDraggingSource(null)
+              }}
+              onPointerCancel={() => setDraggingSource(null)}
               onClick={() => {
+                if (skipSourceClick.current) {
+                  skipSourceClick.current = false
+                  return
+                }
                 if (isMatched) return
                 setSelectedSource(isSelected ? null : id)
                 setFeedback(isSelected ? '' : 'Теперь выбери, с чем соединить карточку.')
               }}
               className={cn(
                 'flex min-h-[72px] items-center gap-2 rounded-2xl border px-3 py-2 text-left text-[12px] font-bold leading-4 transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:cursor-default',
-                isMatched ? 'border-emerald-300 bg-emerald-50 text-emerald-900' : isSelected ? 'border-primary bg-primary/5 text-primary ring-2 ring-primary/15' : 'border-border/70 bg-white text-foreground hover:border-primary/50',
+                isMatched ? 'border-emerald-300 bg-emerald-50 text-emerald-900' : draggingSource === id ? 'border-primary bg-primary/10 text-primary ring-2 ring-primary/20 scale-[1.02]' : isSelected ? 'border-primary bg-primary/5 text-primary ring-2 ring-primary/15' : 'border-border/70 bg-white text-foreground hover:border-primary/50',
               )}
             >
               <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', tone)}>
                 {isMatched ? <Check className="size-5" aria-hidden="true" /> : <Icon className="size-5" aria-hidden="true" />}
               </span>
-              <span>{label}</span>
+              <span className="flex-1">{label}</span>
+              {!isMatched && <span data-drag-handle="true" aria-hidden="true" className="grid size-8 shrink-0 touch-none place-items-center rounded-lg bg-primary/5 text-primary"><Hand className="size-4" /></span>}
             </button>
           )
         })}
       </div>
-
-      <p className="my-3 text-center text-[10px] font-semibold text-muted-foreground">
-        Выбери карточку, затем подходящую пару. На компьютере карточки можно перетаскивать.
-      </p>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {targets.map(({ id, label, detail, tone }) => {
@@ -142,9 +147,8 @@ function MatchPairsGame({
               key={id}
               type="button"
               disabled={isMatched}
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={(event) => handleDrop(event, id)}
-              onClick={() => selectedSource ? assign(selectedSource, id) : setFeedback('Сначала выбери карточку слева.')}
+              data-match-target={id}
+              onClick={() => selectedSource ? assign(selectedSource, id) : setFeedback('Сначала выбери карточку сверху.')}
               className={cn(
                 'flex min-h-[56px] items-center justify-between gap-2 rounded-2xl border-2 border-dashed px-3 py-2 text-left transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20 disabled:border-emerald-300 disabled:bg-emerald-50',
                 isMatched ? 'border-emerald-300 bg-emerald-50' : selectedSource ? 'border-primary/50 bg-primary/[0.035] hover:bg-primary/10' : 'border-border/80 bg-[#FFFCF5]',
@@ -339,33 +343,51 @@ function SortOrderGame({
   retryText: string
 }) {
   const [order, setOrder] = useState(initialOrder)
+  const [selectedItem, setSelectedItem] = useState<string | null>(null)
+  const [draggingItem, setDraggingItem] = useState<string | null>(null)
   const [feedback, setFeedback] = useState('')
   const [solved, setSolved] = useState(false)
+  const draggingItemRef = useRef<string | null>(null)
 
-  const moveItem = (itemId: string, direction: -1 | 1) => {
-    const currentIndex = order.indexOf(itemId)
-    const nextIndex = currentIndex + direction
-    if (nextIndex < 0 || nextIndex >= order.length) return
+  const moveItem = (itemId: string, targetId: string) => {
+    if (itemId === targetId) return
     const nextOrder = [...order]
-    ;[nextOrder[currentIndex], nextOrder[nextIndex]] = [nextOrder[nextIndex], nextOrder[currentIndex]]
-    setOrder(nextOrder)
-    setSolved(false)
-    setFeedback('')
-  }
-
-  const handleDrop = (event: DragEvent<HTMLLIElement>, targetId: string) => {
-    event.preventDefault()
-    const draggedId = event.dataTransfer.getData('text/plain')
-    if (!draggedId || draggedId === targetId) return
-    const nextOrder = [...order]
-    const fromIndex = nextOrder.indexOf(draggedId)
+    const fromIndex = nextOrder.indexOf(itemId)
     const toIndex = nextOrder.indexOf(targetId)
     if (fromIndex < 0 || toIndex < 0) return
     nextOrder.splice(fromIndex, 1)
-    nextOrder.splice(toIndex, 0, draggedId)
+    nextOrder.splice(toIndex, 0, itemId)
     setOrder(nextOrder)
     setSolved(false)
-    setFeedback('')
+    setSelectedItem(null)
+  }
+
+  const chooseItem = (itemId: string) => {
+    if (!selectedItem) {
+      setSelectedItem(itemId)
+      setFeedback('Выбрано. Теперь коснись карточки, рядом с которой её нужно поставить.')
+      return
+    }
+    if (selectedItem === itemId) {
+      setSelectedItem(null)
+      setFeedback('')
+      return
+    }
+    moveItem(selectedItem, itemId)
+    setFeedback('Карточка переставлена. Продолжай или проверь порядок.')
+  }
+
+  const finishDrag = (event: ReactPointerEvent<HTMLLIElement>) => {
+    const draggedId = draggingItemRef.current
+    if (!draggedId) return
+    const target = event.currentTarget.ownerDocument.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>('[data-sort-item]')
+    const targetId = target?.dataset.sortItem
+    if (targetId && targetId !== draggedId) {
+      moveItem(draggedId, targetId)
+      setFeedback('Карточка переставлена. Продолжай или проверь порядок.')
+    }
+    draggingItemRef.current = null
+    setDraggingItem(null)
   }
 
   const checkOrder = () => {
@@ -376,51 +398,53 @@ function SortOrderGame({
 
   return (
     <div>
-      <p className="mb-3 text-[10px] font-semibold leading-4 text-muted-foreground">Перетаскивай карточки или меняй их местами стрелками. На телефоне используй стрелки.</p>
       <ol className="flex flex-col gap-2" aria-label="Карточки для перестановки">
-        {order.map((itemId, index) => {
+        {order.map((itemId) => {
           const item = items.find(({ id }) => id === itemId)
           if (!item) return null
           const Icon = item.icon
           return (
             <li
               key={item.id}
-              draggable
-              data-allow-drag="true"
-              onDragStart={(event) => {
-                event.dataTransfer.setData('text/plain', item.id)
-                event.dataTransfer.effectAllowed = 'move'
+              data-sort-item={item.id}
+              onPointerUp={finishDrag}
+              onPointerCancel={() => {
+                draggingItemRef.current = null
+                setDraggingItem(null)
               }}
-              onDragOver={(event) => event.preventDefault()}
-              onDrop={(event) => handleDrop(event, item.id)}
-              className="flex min-h-[64px] items-center gap-2 rounded-2xl border border-border/70 bg-white p-2.5"
+              className={cn(
+                'flex min-h-[64px] items-center gap-2 rounded-2xl border bg-white p-2.5 transition',
+                draggingItem === item.id ? 'border-primary bg-primary/5 shadow-md' : selectedItem === item.id ? 'border-primary ring-2 ring-primary/15' : 'border-border/70',
+              )}
             >
-              <span aria-hidden="true" className={cn('grid size-10 shrink-0 place-items-center rounded-xl', item.tone)}>
-                <Icon className="size-5" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block text-[12px] font-extrabold text-foreground">{item.label}</span>
-                <span className="mt-0.5 block text-[10px] leading-4 text-muted-foreground">{item.detail}</span>
-              </span>
-              <span className="flex shrink-0 flex-col gap-1">
-                <button
-                  type="button"
-                  aria-label={`Переместить «${item.label}» выше`}
-                  disabled={index === 0}
-                  onClick={() => moveItem(item.id, -1)}
-                  className="grid size-8 place-items-center rounded-lg bg-[#F4EFFF] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-                >
-                  <ArrowUp className="size-4" aria-hidden="true" />
-                </button>
-                <button
-                  type="button"
-                  aria-label={`Переместить «${item.label}» ниже`}
-                  disabled={index === order.length - 1}
-                  onClick={() => moveItem(item.id, 1)}
-                  className="grid size-8 place-items-center rounded-lg bg-[#F4EFFF] text-primary transition hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
-                >
-                  <ArrowDown className="size-4" aria-hidden="true" />
-                </button>
+              <button
+                type="button"
+                aria-pressed={selectedItem === item.id}
+                onClick={() => chooseItem(item.id)}
+                className="flex min-w-0 flex-1 items-center gap-2 rounded-xl text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
+              >
+                <span aria-hidden="true" className={cn('grid size-10 shrink-0 place-items-center rounded-xl', item.tone)}>
+                  <Icon className="size-5" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[12px] font-extrabold text-foreground">{item.label}</span>
+                  <span className="mt-0.5 block text-[10px] leading-4 text-muted-foreground">{item.detail}</span>
+                </span>
+              </button>
+              <span
+                data-drag-handle="true"
+                aria-hidden="true"
+                onPointerDown={(event) => {
+                  if (event.button !== 0) return
+                  const row = event.currentTarget.closest<HTMLLIElement>('[data-sort-item]')
+                  row?.setPointerCapture(event.pointerId)
+                  draggingItemRef.current = item.id
+                  setDraggingItem(item.id)
+                  setSelectedItem(null)
+                }}
+                className="grid size-10 shrink-0 touch-none cursor-grab place-items-center rounded-xl bg-[#F4EFFF] text-primary active:cursor-grabbing"
+              >
+                <Hand className="size-5" />
               </span>
             </li>
           )

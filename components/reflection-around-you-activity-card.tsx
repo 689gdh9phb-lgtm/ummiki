@@ -1,5 +1,20 @@
+import Image from 'next/image'
 import type { ReactNode } from 'react'
+import { cn } from '@/lib/utils'
 import type { ReflectionActivity } from '@/lib/data/reflection-around-you'
+
+const illustrations: Record<string, { src: string; alt: string }> = {
+  fingerprints: { src: '/images/reflection/activities/fingerprints.png', alt: 'Руки ребёнка рассматривают узор на пальце через лупу' },
+  air: { src: '/images/reflection/activities/air.png', alt: 'Ребёнок выдыхает на ладонь, вокруг показаны потоки воздуха' },
+  pulse: { src: '/images/reflection/activities/pulse.png', alt: 'Ребёнок находит пульс на запястье; рядом сон, чтение и бег' },
+  colors: { src: '/images/reflection/activities/colors.png', alt: 'Солнечный свет освещает красный мяч, зелёный лист и синюю книгу' },
+  sound: { src: '/images/reflection/activities/sound.png', alt: 'Звуковые волны идут от колокольчика к уху ребёнка' },
+  shadows: { src: '/images/reflection/activities/shadows.png', alt: 'Лампа и непрозрачная игрушка создают тень на стене' },
+  water: { src: '/images/reflection/activities/water.png', alt: 'Лёд, вода в стакане и невидимый водяной пар' },
+  magnets: { src: '/images/reflection/activities/magnets.png', alt: 'Магнит притягивает скрепку и шайбу, но не бумагу и кубик' },
+  reflection: { src: '/images/reflection/activities/reflection.png', alt: 'Зеркало и спокойная вода отражают цветок' },
+  senses: { src: '/images/reflection/activities/senses.png', alt: 'Ребёнок исследует мир зрением, слухом, обонянием, вкусом и осязанием' },
+}
 
 interface ReflectionAroundYouActivityCardProps {
   activity: ReflectionActivity
@@ -17,7 +32,7 @@ function ActivitySection({
   className: string
 }) {
   return (
-    <section className={`rounded-[22px] p-4 sm:p-5 ${className}`}>
+    <section className={cn('rounded-[22px] p-4 sm:p-5', className)}>
       <h3 className="mb-2 text-[11px] font-extrabold uppercase tracking-[0.16em] text-primary sm:text-xs">
         {label}
       </h3>
@@ -33,6 +48,8 @@ export function ReflectionAroundYouActivityCard({
   index,
   children,
 }: ReflectionAroundYouActivityCardProps) {
+  const illustration = illustrations[activity.id]
+
   return (
     <article
       id={`activity-${activity.id}`}
@@ -56,15 +73,36 @@ export function ReflectionAroundYouActivityCard({
         </div>
       </header>
 
-      <div className="flex flex-col gap-3">
-        <ActivitySection label="Сделай" className="bg-[#FFF6E4]">
-          {activity.do.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </ActivitySection>
+      <div className={cn(
+        'grid items-start gap-3 md:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]',
+        index % 2 === 1 && 'md:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]',
+      )}>
+        <figure className={cn(
+          'relative aspect-[3/2] overflow-hidden rounded-[22px] border border-white/80 bg-[#F8F2E6] md:sticky md:top-4 md:self-start',
+          index % 2 === 1 && 'md:order-2',
+        )}>
+          <Image
+            src={illustration.src}
+            alt={illustration.alt}
+            fill
+            sizes="(max-width: 768px) 100vw, 280px"
+            className="object-cover"
+          />
+        </figure>
 
-        <ActivitySection label="Узнай" className="bg-[#F4EFFF]">
-          {activity.learn.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        </ActivitySection>
+        <div className={cn('flex flex-col gap-3', index % 2 === 1 && 'md:order-1')}>
+          <ActivitySection label="Сделай" className="bg-[#FFF6E4]">
+            {activity.do.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </ActivitySection>
 
+          <ActivitySection label="Узнай" className="bg-[#F4EFFF]">
+            {activity.learn.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+          </ActivitySection>
+        </div>
+
+      </div>
+
+      <div className="mt-3 flex flex-col gap-3">
         <section aria-label={`Задание: ${activity.gameTitle}`} className="rounded-[22px] border border-[#E9DFC9] bg-white p-4 sm:p-5">
           <p className="mb-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-primary">
             Реши · задание {index + 1}
