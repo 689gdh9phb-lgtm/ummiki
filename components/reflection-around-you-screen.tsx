@@ -104,7 +104,7 @@ export function ReflectionAroundYouScreen() {
             <div className="relative min-h-[112px] w-[42%] shrink-0 overflow-hidden sm:min-h-[132px] sm:w-[45%]">
               <Image
                 src="/images/reflection/around-you.png"
-                alt="Настольная лупа и яркие предметы для научных открытий"
+                alt="Детская рисованная иллюстрация предметов для научных открытий"
                 fill
                 priority
                 sizes="(max-width: 640px) 42vw, 300px"

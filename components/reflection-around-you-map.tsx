@@ -1,4 +1,4 @@
-import { Bell, BookOpen, Check, Droplet, Flashlight, Magnet, Sun, Wind } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { reflectionActivities } from '@/lib/data/reflection-around-you'
 
 const rowHeight = 84
@@ -10,16 +10,6 @@ const routePath = points.reduce((path, point, index) => {
   const middleY = (previous.y + point.y) / 2
   return `${path} C ${previous.x} ${middleY} ${point.x} ${middleY} ${point.x} ${point.y}`
 }, '')
-
-const decorations = [
-  { icon: BookOpen, x: 10, y: 94, label: 'Книга', tone: 'from-[#FFF7D6] to-[#F5D98A]', rotation: '-rotate-12' },
-  { icon: Sun, x: 90, y: 130, label: 'Солнце', tone: 'from-[#FFF1B8] to-[#FFC75D]', rotation: 'rotate-12' },
-  { icon: Flashlight, x: 10, y: 256, label: 'Фонарик', tone: 'from-[#E2EEFF] to-[#AFC7F4]', rotation: 'rotate-6' },
-  { icon: Wind, x: 90, y: 340, label: 'Воздух', tone: 'from-[#E0F8F4] to-[#9EDFD5]', rotation: '-rotate-12' },
-  { icon: Magnet, x: 10, y: 550, label: 'Магнит', tone: 'from-[#FFE6E8] to-[#FFADB4]', rotation: 'rotate-12' },
-  { icon: Droplet, x: 10, y: 680, label: 'Вода', tone: 'from-[#E1F4FF] to-[#9CD7F2]', rotation: '-rotate-6' },
-  { icon: Bell, x: 90, y: 780, label: 'Звук', tone: 'from-[#F1E8FF] to-[#CEB6F6]', rotation: 'rotate-6' },
-]
 
 interface ReflectionAroundYouMapProps {
   onSelectActivity: (activityId: string) => void
@@ -44,20 +34,6 @@ export function ReflectionAroundYouMap({ onSelectActivity, completedActivityIds 
           <path d={routePath} fill="none" stroke="#FFFFFF" strokeLinecap="round" strokeLinejoin="round" strokeWidth="10" />
           <path d={routePath} fill="none" stroke="#E9C56C" strokeDasharray="3 5" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
         </svg>
-
-        {decorations.map(({ icon: Icon, x, y, label, tone, rotation }) => (
-          <div
-            key={`${x}-${y}`}
-            aria-hidden="true"
-            className={`absolute z-0 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1 ${rotation}`}
-            style={{ left: `${x}%`, top: y }}
-          >
-            <span className={`grid size-12 place-items-center rounded-[17px] border-[3px] border-white bg-gradient-to-br ${tone} text-[#574866] shadow-[0_7px_12px_rgba(67,54,77,0.20),inset_0_1px_2px_rgba(255,255,255,0.95)] sm:size-[52px]`}>
-              <Icon className="size-6 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)]" />
-            </span>
-            <span className="rounded-full bg-white/90 px-2 py-0.5 text-[9px] font-extrabold text-foreground/70 shadow-sm">{label}</span>
-          </div>
-        ))}
 
         {reflectionActivities.map((activity, index) => {
           const completed = completedActivityIds.includes(activity.id)

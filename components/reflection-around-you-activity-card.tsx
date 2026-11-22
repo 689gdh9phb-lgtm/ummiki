@@ -4,16 +4,16 @@ import { cn } from '@/lib/utils'
 import type { ReflectionActivity } from '@/lib/data/reflection-around-you'
 
 const illustrations: Record<string, { src: string; alt: string }> = {
-  fingerprints: { src: '/images/reflection/activities/fingerprints.png', alt: 'Крупный план подушечки пальца рядом с латунной лупой' },
-  air: { src: '/images/reflection/activities/air.png', alt: 'Полупрозрачные потоки воздуха огибают настольную вертушку' },
-  pulse: { src: '/images/reflection/activities/pulse.png', alt: 'Метроном, секундомер и красная нить с линией ритма на столе' },
-  colors: { src: '/images/reflection/activities/colors.png', alt: 'Стеклянная призма направляет красный, зелёный и синий лучи' },
-  sound: { src: '/images/reflection/activities/sound.png', alt: 'Латунный колокольчик окружён расходящимися звуковыми волнами' },
-  shadows: { src: '/images/reflection/activities/shadows.png', alt: 'Настольная лампа направляет свет на книгу и её тень' },
-  water: { src: '/images/reflection/activities/water.png', alt: 'Лёд, стакан воды и чайник с полупрозрачными струйками пара' },
-  magnets: { src: '/images/reflection/activities/magnets.png', alt: 'Подкова-магнит притягивает металлические скрепки' },
-  reflection: { src: '/images/reflection/activities/reflection.png', alt: 'Зеркало и спокойная вода отражают керамические арки' },
-  senses: { src: '/images/reflection/activities/senses.png', alt: 'Пять предметов для изучения зрения, звука, запаха, прикосновения и вкуса' },
+  fingerprints: { src: '/images/reflection/activities/fingerprints.png', alt: 'Детский рисунок отпечатка пальца под увеличительным стеклом' },
+  air: { src: '/images/reflection/activities/air.png', alt: 'Бумажная вертушка и цветные завитки воздушных потоков' },
+  pulse: { src: '/images/reflection/activities/pulse.png', alt: 'Секундомер, метроном и зигзаг ритма' },
+  colors: { src: '/images/reflection/activities/colors.png', alt: 'Призма разлагает луч света на цветные полосы' },
+  sound: { src: '/images/reflection/activities/sound.png', alt: 'Колокольчик и камертон со звуковыми волнами' },
+  shadows: { src: '/images/reflection/activities/shadows.png', alt: 'Фонарик освещает геометрический предмет и отбрасывает тень' },
+  water: { src: '/images/reflection/activities/water.png', alt: 'Стакан воды, кубик льда и чайник с завитками пара' },
+  magnets: { src: '/images/reflection/activities/magnets.svg', alt: 'Детский рисунок подковообразного магнита, притягивающего скрепки и шайбы' },
+  reflection: { src: '/images/reflection/activities/reflection.svg', alt: 'Детский рисунок зеркала и гладкой воды с цветными отражениями' },
+  senses: { src: '/images/reflection/activities/senses.svg', alt: 'Пять нарисованных предметов для изучения зрения, звука, запаха, прикосновения и вкуса' },
 }
 
 interface ReflectionAroundYouActivityCardProps {
