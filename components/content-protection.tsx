@@ -10,7 +10,10 @@ import { useEffect } from 'react'
 export function ContentProtection() {
   useEffect(() => {
     const blockContextMenu = (e: MouseEvent) => e.preventDefault()
-    const blockDragStart = (e: DragEvent) => e.preventDefault()
+    const blockDragStart = (e: DragEvent) => {
+      const target = e.target instanceof Element ? e.target.closest('[data-allow-drag="true"]') : null
+      if (!target) e.preventDefault()
+    }
 
     const blockKeys = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase()

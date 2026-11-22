@@ -1,6 +1,8 @@
 'use client'
 
 import Image from 'next/image'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 import { BackButton } from '@/components/back-button'
 import { reflectionTrails } from '@/lib/data/reflection-trails'
 
@@ -25,41 +27,68 @@ export function ReflectionTrailsScreen() {
         </header>
 
         <section aria-label="Доступные дорожки" className="space-y-4 sm:space-y-5">
-          {reflectionTrails.map((trail, index) => (
-            <article
-              key={trail.id}
-              className="overflow-hidden rounded-[26px] border border-white/90 bg-white shadow-[0_12px_32px_rgba(63,77,104,0.12)]"
-            >
-              <div className="relative h-[142px] overflow-hidden sm:h-[180px]">
-                <Image
-                  src={trail.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 640px) 100vw, 600px"
-                  className="object-cover"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#202737]/25 to-transparent"
-                />
-                <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-primary-foreground shadow-sm">
-                  Дорожка {String(index + 1).padStart(2, '0')}
-                </span>
-              </div>
+          {reflectionTrails.map((trail, index) => {
+            const cardContent = (
+              <>
+                <div className="relative h-[142px] overflow-hidden sm:h-[180px]">
+                  <Image
+                    src={trail.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 640px) 100vw, 600px"
+                    className="object-cover"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#202737]/25 to-transparent"
+                  />
+                  <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-primary-foreground shadow-sm">
+                    Дорожка {String(index + 1).padStart(2, '0')}
+                  </span>
+                </div>
 
-              <div className="px-5 pb-4 pt-3.5 sm:px-6 sm:pb-5 sm:pt-4">
-                <h2 className="text-[20px] font-extrabold leading-tight tracking-[-0.02em] text-foreground sm:text-[23px]">
-                  {trail.title}
-                </h2>
-                <p className="mt-1 text-[12px] font-bold tracking-[0.03em] text-primary sm:text-[13px]">
-                  {trail.subtitle}
-                </p>
-                <p className="mt-1.5 text-[13px] leading-[1.45] text-muted-foreground sm:text-sm">
-                  {trail.description}
-                </p>
-              </div>
-            </article>
-          ))}
+                <div className="px-5 pb-4 pt-3.5 sm:px-6 sm:pb-5 sm:pt-4">
+                  <h2 className="text-[20px] font-extrabold leading-tight tracking-[-0.02em] text-foreground sm:text-[23px]">
+                    {trail.title}
+                  </h2>
+                  <p className="mt-1 text-[12px] font-bold tracking-[0.03em] text-primary sm:text-[13px]">
+                    {trail.subtitle}
+                  </p>
+                  <p className="mt-1.5 text-[13px] leading-[1.45] text-muted-foreground sm:text-sm">
+                    {trail.description}
+                  </p>
+                  {trail.id === 'around-you' && (
+                    <span className="mt-3 inline-flex items-center gap-1 text-[12px] font-extrabold text-primary">
+                      Открыть дорожку
+                      <ChevronRight aria-hidden="true" className="size-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  )}
+                </div>
+              </>
+            )
+
+            if (trail.id === 'around-you') {
+              return (
+                <Link
+                  key={trail.id}
+                  href="/reflection/trails/around-you"
+                  aria-label={`Открыть дорожку «${trail.title}»`}
+                  className="group block overflow-hidden rounded-[26px] border border-white/90 bg-white shadow-[0_12px_32px_rgba(63,77,104,0.12)] transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/25"
+                >
+                  {cardContent}
+                </Link>
+              )
+            }
+
+            return (
+              <article
+                key={trail.id}
+                className="overflow-hidden rounded-[26px] border border-white/90 bg-white shadow-[0_12px_32px_rgba(63,77,104,0.12)]"
+              >
+                {cardContent}
+              </article>
+            )
+          })}
         </section>
       </div>
     </main>
