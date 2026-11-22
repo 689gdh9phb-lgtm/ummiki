@@ -4,16 +4,16 @@ import { cn } from '@/lib/utils'
 import type { ReflectionActivity } from '@/lib/data/reflection-around-you'
 
 const illustrations: Record<string, { src: string; alt: string }> = {
-  fingerprints: { src: '/images/reflection/activities/fingerprints.png', alt: 'Руки ребёнка рассматривают узор на пальце через лупу' },
-  air: { src: '/images/reflection/activities/air.png', alt: 'Ребёнок выдыхает на ладонь, вокруг показаны потоки воздуха' },
-  pulse: { src: '/images/reflection/activities/pulse.png', alt: 'Ребёнок находит пульс на запястье; рядом сон, чтение и бег' },
-  colors: { src: '/images/reflection/activities/colors.png', alt: 'Солнечный свет освещает красный мяч, зелёный лист и синюю книгу' },
-  sound: { src: '/images/reflection/activities/sound.png', alt: 'Звуковые волны идут от колокольчика к уху ребёнка' },
-  shadows: { src: '/images/reflection/activities/shadows.png', alt: 'Лампа и непрозрачная игрушка создают тень на стене' },
-  water: { src: '/images/reflection/activities/water.png', alt: 'Лёд, вода в стакане и невидимый водяной пар' },
-  magnets: { src: '/images/reflection/activities/magnets.png', alt: 'Магнит притягивает скрепку и шайбу, но не бумагу и кубик' },
-  reflection: { src: '/images/reflection/activities/reflection.png', alt: 'Зеркало и спокойная вода отражают цветок' },
-  senses: { src: '/images/reflection/activities/senses.png', alt: 'Ребёнок исследует мир зрением, слухом, обонянием, вкусом и осязанием' },
+  fingerprints: { src: '/images/reflection/activities/fingerprints.png', alt: 'Крупный план подушечки пальца рядом с латунной лупой' },
+  air: { src: '/images/reflection/activities/air.png', alt: 'Полупрозрачные потоки воздуха огибают настольную вертушку' },
+  pulse: { src: '/images/reflection/activities/pulse.png', alt: 'Метроном, секундомер и красная нить с линией ритма на столе' },
+  colors: { src: '/images/reflection/activities/colors.png', alt: 'Стеклянная призма направляет красный, зелёный и синий лучи' },
+  sound: { src: '/images/reflection/activities/sound.png', alt: 'Латунный колокольчик окружён расходящимися звуковыми волнами' },
+  shadows: { src: '/images/reflection/activities/shadows.png', alt: 'Настольная лампа направляет свет на книгу и её тень' },
+  water: { src: '/images/reflection/activities/water.png', alt: 'Лёд, стакан воды и чайник с полупрозрачными струйками пара' },
+  magnets: { src: '/images/reflection/activities/magnets.png', alt: 'Подкова-магнит притягивает металлические скрепки' },
+  reflection: { src: '/images/reflection/activities/reflection.png', alt: 'Зеркало и спокойная вода отражают керамические арки' },
+  senses: { src: '/images/reflection/activities/senses.png', alt: 'Пять предметов для изучения зрения, звука, запаха, прикосновения и вкуса' },
 }
 
 interface ReflectionAroundYouActivityCardProps {
@@ -78,7 +78,7 @@ export function ReflectionAroundYouActivityCard({
         index % 2 === 1 && 'md:grid-cols-[minmax(0,1.18fr)_minmax(0,0.82fr)]',
       )}>
         <figure className={cn(
-          'relative aspect-[3/2] overflow-hidden rounded-[22px] border border-white/80 bg-[#F8F2E6] md:sticky md:top-4 md:self-start',
+          'relative aspect-[3/2] overflow-hidden rounded-[22px] border border-white/80 bg-[#F8F2E6] md:self-start',
           index % 2 === 1 && 'md:order-2',
         )}>
           <Image

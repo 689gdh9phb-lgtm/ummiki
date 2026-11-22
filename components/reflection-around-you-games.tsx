@@ -12,7 +12,6 @@ import {
   Ear,
   Footprints,
   Hand,
-  Leaf,
   Link,
   Magnet,
   Moon,
@@ -203,7 +202,7 @@ function FingerprintDrawing({ variant }: { variant: 'loop' | 'whorl' | 'nearby' 
   )
 }
 
-function FingerprintGame() {
+function FingerprintGame({ onComplete }: { onComplete?: () => void }) {
   const [selected, setSelected] = useState<string | null>(null)
   const [solved, setSolved] = useState(false)
   const [feedback, setFeedback] = useState('')
@@ -230,6 +229,7 @@ function FingerprintGame() {
     setSolved(correctPair)
     setSelected(null)
     setFeedback(correctPair ? 'Верно! А и В — совершенно одинаковые узоры.' : 'Эти узоры похожи, но не совпадают. Попробуй ещё раз.')
+    if (correctPair) onComplete?.()
   }
 
   return (
@@ -256,7 +256,7 @@ function FingerprintGame() {
   )
 }
 
-function AirCompositionGame() {
+function AirCompositionGame({ onComplete }: { onComplete?: () => void }) {
   const [compositionMatched, setCompositionMatched] = useState(false)
   const [factAnswer, setFactAnswer] = useState<'true' | 'false' | null>(null)
   const squares = Array.from({ length: 100 }, (_, index) => index < 78 ? 'nitrogen' : index < 99 ? 'oxygen' : 'other')
@@ -304,7 +304,11 @@ function AirCompositionGame() {
                 key={answer.id}
                 type="button"
                 aria-pressed={factAnswer === answer.id}
-                onClick={() => setFactAnswer(answer.id as 'true' | 'false')}
+                onClick={() => {
+                  const nextAnswer = answer.id as 'true' | 'false'
+                  setFactAnswer(nextAnswer)
+                  if (nextAnswer === 'false' && compositionMatched) onComplete?.()
+                }}
                 className={cn(
                   'min-h-11 rounded-xl border px-3 text-sm font-bold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/20',
                   factAnswer === answer.id ? 'border-primary bg-primary/10 text-primary' : 'border-border/70 bg-white text-foreground hover:border-primary/50',
@@ -335,12 +339,14 @@ function SortOrderGame({
   correctOrder,
   successText,
   retryText,
+  onComplete,
 }: {
   items: SortItem[]
   initialOrder: string[]
   correctOrder: string[]
   successText: string
   retryText: string
+  onComplete?: () => void
 }) {
   const [order, setOrder] = useState(initialOrder)
   const [selectedItem, setSelectedItem] = useState<string | null>(null)
@@ -394,6 +400,7 @@ function SortOrderGame({
     const correct = order.every((itemId, index) => itemId === correctOrder[index])
     setSolved(correct)
     setFeedback(correct ? successText : retryText)
+    if (correct) onComplete?.()
   }
 
   return (
@@ -469,6 +476,7 @@ function ChoiceQuiz({
   multiple = false,
   successText,
   retryText,
+  onComplete,
 }: {
   question: string
   options: { id: string; label: string; icon: LucideIcon; tone: string }[]
@@ -476,6 +484,7 @@ function ChoiceQuiz({
   multiple?: boolean
   successText: string
   retryText: string
+  onComplete?: () => void
 }) {
   const [selected, setSelected] = useState<string[]>([])
   const [feedback, setFeedback] = useState('')
@@ -495,6 +504,7 @@ function ChoiceQuiz({
     const isCorrect = selected.length === correctIds.length && correctIds.every((id) => selected.includes(id))
     setSolved(isCorrect)
     setFeedback(isCorrect ? successText : retryText)
+    if (isCorrect) onComplete?.()
   }
 
   return (
@@ -584,7 +594,7 @@ function AirActivity() {
   return <AirCompositionGame />
 }
 
-function PulseActivity() {
+function PulseActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <SortOrderGame
       items={[
@@ -596,16 +606,17 @@ function PulseActivity() {
       correctOrder={['sleep', 'rest', 'run']}
       successText="Верно: во сне сердце обычно бьётся спокойнее, а при беге — быстрее."
       retryText="Подумай, когда мышцам требуется больше кислорода и питательных веществ."
+      onComplete={onComplete}
     />
   )
 }
 
-function ColorsActivity() {
+function ColorsActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <MatchPairsGame
       sources={[
         { id: 'red', label: 'Красный мяч', icon: Circle, tone: 'bg-red-50 text-red-600' },
-        { id: 'green', label: 'Зелёный лист', icon: Leaf, tone: 'bg-emerald-50 text-emerald-700' },
+        { id: 'green', label: 'Зелёный предмет', icon: Circle, tone: 'bg-emerald-50 text-emerald-700' },
         { id: 'blue', label: 'Синяя книга', icon: BookOpen, tone: 'bg-sky-50 text-sky-700' },
       ]}
       targets={[
@@ -615,11 +626,12 @@ function ColorsActivity() {
       ]}
       correctPairs={{ red: 'red-ray', green: 'green-ray', blue: 'blue-ray' }}
       successText="Правильно: предмет преимущественно отражает свет своего цвета."
+      onComplete={onComplete}
     />
   )
 }
 
-function SoundActivity() {
+function SoundActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <div>
       <SortOrderGame
@@ -633,13 +645,14 @@ function SoundActivity() {
         correctOrder={['bell', 'waves', 'ear', 'brain']}
         successText="Верно! Звук проходит путь от источника через воздух к уху и мозгу."
         retryText="Представь путь звука: сначала он возникает, затем доходит до уха."
+        onComplete={onComplete}
       />
       <ExamplesReflection />
     </div>
   )
 }
 
-function ShadowsActivity() {
+function ShadowsActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceQuiz
       question="Что создаст самую чёткую тень между лампой и стеной?"
@@ -647,16 +660,17 @@ function ShadowsActivity() {
         { id: 'glass', label: 'Прозрачный стакан', icon: Search, tone: 'bg-sky-50 text-sky-700' },
         { id: 'book', label: 'Плотная книга', icon: BookOpen, tone: 'bg-amber-50 text-amber-700' },
         { id: 'window', label: 'Чистое окно', icon: Sun, tone: 'bg-yellow-50 text-yellow-700' },
-        { id: 'leaf', label: 'Тонкий лист', icon: Leaf, tone: 'bg-emerald-50 text-emerald-700' },
+        { id: 'paper', label: 'Тонкая бумага', icon: BookOpen, tone: 'bg-emerald-50 text-emerald-700' },
       ]}
       correctIds={['book']}
       successText="Верно! Непрозрачная книга задерживает больше света."
       retryText="Подумай, какой предмет пропускает меньше всего света."
+      onComplete={onComplete}
     />
   )
 }
 
-function WaterActivity() {
+function WaterActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <MatchPairsGame
       sources={[
@@ -671,11 +685,12 @@ function WaterActivity() {
       ]}
       correctPairs={{ ice: 'solid', liquid: 'liquid', vapor: 'gas' }}
       successText="Отлично! Это три состояния одного вещества — воды."
+      onComplete={onComplete}
     />
   )
 }
 
-function MagnetsActivity() {
+function MagnetsActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceQuiz
       question="Отметь все предметы, которые магнит притянет."
@@ -689,11 +704,12 @@ function MagnetsActivity() {
       correctIds={['clip', 'washer']}
       successText="Правильно! Магнит притягивает сталь и железо."
       retryText="Магнит притягивает не любые предметы. Проверь, из чего они сделаны."
+      onComplete={onComplete}
     />
   )
 }
 
-function ReflectionActivity() {
+function ReflectionActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <ChoiceQuiz
       question="На каких поверхностях можно увидеть ясное отражение предметов?"
@@ -707,11 +723,12 @@ function ReflectionActivity() {
       correctIds={['mirror', 'water']}
       successText="Верно! Гладкое зеркало и спокойная вода могут показать отражение."
       retryText="Ищи гладкие поверхности, которые отражают свет упорядоченно."
+      onComplete={onComplete}
     />
   )
 }
 
-function SensesActivity() {
+function SensesActivity({ onComplete }: { onComplete?: () => void }) {
   return (
     <MatchPairsGame
       sources={[
@@ -728,22 +745,23 @@ function SensesActivity() {
       ]}
       correctPairs={{ color: 'eyes', sound: 'ears', scent: 'nose', touch: 'skin' }}
       successText="Здорово! Разные чувства помогают узнавать окружающий мир."
+      onComplete={onComplete}
     />
   )
 }
 
-export function AroundYouActivityGame({ activityId }: { activityId: string }) {
+export function AroundYouActivityGame({ activityId, onComplete }: { activityId: string; onComplete?: () => void }) {
   switch (activityId) {
-    case 'fingerprints': return <FingerprintGame />
-    case 'air': return <AirCompositionGame />
-    case 'pulse': return <PulseActivity />
-    case 'colors': return <ColorsActivity />
-    case 'sound': return <SoundActivity />
-    case 'shadows': return <ShadowsActivity />
-    case 'water': return <WaterActivity />
-    case 'magnets': return <MagnetsActivity />
-    case 'reflection': return <ReflectionActivity />
-    case 'senses': return <SensesActivity />
+    case 'fingerprints': return <FingerprintGame onComplete={onComplete} />
+    case 'air': return <AirCompositionGame onComplete={onComplete} />
+    case 'pulse': return <PulseActivity onComplete={onComplete} />
+    case 'colors': return <ColorsActivity onComplete={onComplete} />
+    case 'sound': return <SoundActivity onComplete={onComplete} />
+    case 'shadows': return <ShadowsActivity onComplete={onComplete} />
+    case 'water': return <WaterActivity onComplete={onComplete} />
+    case 'magnets': return <MagnetsActivity onComplete={onComplete} />
+    case 'reflection': return <ReflectionActivity onComplete={onComplete} />
+    case 'senses': return <SensesActivity onComplete={onComplete} />
     default: return null
   }
 }
