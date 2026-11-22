@@ -13,7 +13,7 @@ export function ReflectionIntroScreen() {
   const { hapticFeedback } = useTelegram()
 
   return (
-    <main className="relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden px-4 py-4 sm:px-8">
+    <main className="relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden px-6 py-5 sm:px-8 sm:py-6">
       <picture className="absolute inset-0 -z-20" aria-hidden="true">
         <source
           media="(min-width: 768px)"
@@ -39,14 +39,14 @@ export function ReflectionIntroScreen() {
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
         aria-labelledby="reflection-title"
-        className="relative w-full max-w-[620px] rounded-[30px] border border-white/80 bg-[#FFFCF5]/95 p-5 shadow-[0_24px_80px_rgba(50,65,80,0.22)] backdrop-blur-[3px] sm:rounded-[36px] sm:p-8"
+        className="relative flex min-h-[480px] w-full max-w-[520px] items-center rounded-[30px] border border-white/80 bg-[#FFFCF5]/95 p-5 shadow-[0_24px_80px_rgba(50,65,80,0.22)] backdrop-blur-[3px] sm:min-h-[540px] sm:rounded-[36px] sm:p-8"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-[7px] rounded-[24px] border border-[#E9DFC9] sm:rounded-[29px]"
         />
 
-        <div className="relative">
+        <div className="relative w-full">
           <div className="mb-3 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.17em] text-primary sm:mb-4 sm:text-[11px]">
             <MapPin aria-hidden="true" className="h-4 w-4 shrink-0" />
             <span>Приключение начинается здесь</span>
