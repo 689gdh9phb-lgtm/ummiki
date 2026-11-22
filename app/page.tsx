@@ -8,6 +8,8 @@ const menuItems = [
   { title: 'Истории', pill: 'Читать', emoji: '📖', href: '/stories' },
   { title: 'Хадисы', pill: 'Читать', emoji: '🕌', href: '/hadiths' },
   { title: '99 имён\nАллаха', pill: 'Изучать', emoji: '🕋', href: '/names' },
+  { title: 'Дорожки размышлений', pill: 'Скоро', emoji: '🌿' },
+  { title: 'Дуа на каждый день', pill: 'Скоро', emoji: '🤲' },
 ]
 
 export default function HomePage() {
@@ -32,7 +34,7 @@ export default function HomePage() {
       <div className="grid grid-cols-2 gap-3 w-full max-w-[400px]">
         {menuItems.map((item, index) => (
           <HomeCard 
-            key={item.href}
+            key={item.href ?? item.title}
             title={item.title}
             pill={item.pill}
             emoji={item.emoji}
