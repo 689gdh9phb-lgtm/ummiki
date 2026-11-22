@@ -2,18 +2,21 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import type { LucideIcon } from 'lucide-react'
 import { useTelegram } from './telegram-provider'
 
 interface HomeCardProps {
   title: string
   pill: string
-  emoji: string
+  emoji?: string
+  icon?: LucideIcon
   href?: string
   index: number
 }
 
-export function HomeCard({ title, pill, emoji, href, index }: HomeCardProps) {
+export function HomeCard({ title, pill, emoji, icon, href, index }: HomeCardProps) {
   const { hapticFeedback } = useTelegram()
+  const Icon = icon
 
   const card = (
     <motion.div
@@ -38,9 +41,13 @@ export function HomeCard({ title, pill, emoji, href, index }: HomeCardProps) {
         </span>
       </div>
 
-      {/* Emoji icon - large */}
+      {/* Category icon - large */}
       <div className="flex-1 flex items-start pt-2">
-        <span className="text-[44px] leading-none">{emoji}</span>
+        {Icon ? (
+          <Icon aria-hidden="true" className="h-11 w-11 text-primary" strokeWidth={1.8} />
+        ) : (
+          <span aria-hidden="true" className="text-[44px] leading-none">{emoji}</span>
+        )}
       </div>
 
       {/* Title - bottom left */}

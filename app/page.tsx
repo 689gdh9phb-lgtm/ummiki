@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import { MapPin } from 'lucide-react'
 import { HomeCard } from '@/components/home-card'
 
 const menuItems = [
@@ -8,7 +9,7 @@ const menuItems = [
   { title: 'Истории', pill: 'Читать', emoji: '📖', href: '/stories' },
   { title: 'Хадисы', pill: 'Читать', emoji: '🕌', href: '/hadiths' },
   { title: '99 имён\nАллаха', pill: 'Изучать', emoji: '🕋', href: '/names' },
-  { title: 'Дорожки размышлений', pill: 'Скоро', emoji: '🌿' },
+  { title: 'Дорожки размышлений', pill: 'Открыть', icon: MapPin, href: '/reflection' },
   { title: 'Дуа на каждый день', pill: 'Скоро', emoji: '🤲' },
 ]
 
@@ -38,6 +39,7 @@ export default function HomePage() {
             title={item.title}
             pill={item.pill}
             emoji={item.emoji}
+            icon={item.icon}
             href={item.href}
             index={index}
           />
